@@ -1,0 +1,21 @@
+今日作ったものを一通り実践
+Hello, John!
+Implement Speaking Interface, Alen!
+Implement Speaking Interface, Bob!
+
+インターフェースの実装2つ：Selling.java、Buying.java
+継承を使ってみてください：
+親クラス：Shop.java
+子クラス：CoffeeShop.java
+
+実際にメソッドを使って呼び出し
+インターフェースからオーバーライドしたメソッドを使う：
+Sell Original
+子クラスでオーバーライドしたメソッドを使う：
+Coffee Shop Employed tanaka
+
+親クラスで停止されたメソッドを使う：
+Shop Employed Employ Manager suzuki
+
+子クラスで定義したメソッドを使う：
+Hand out 500 yen
