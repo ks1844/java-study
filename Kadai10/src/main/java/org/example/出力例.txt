@@ -1,0 +1,23 @@
+講義内のコード
+[tamalae@yahoo.co.jp, inoue@gmail.com, sato@gmail.com]
+
+課題
+Listにランダムな文字列を30個ほど入れる
+mixedElementsList:
+[12345, 67890, abcdef, XYZxyz, qwerty, asdfgh, HELLO, WORLD, example1@example.com, user123@domain.org, こんにちは, さようなら, 漢字のみ, 日本語, カタカナ, サンプル, Abc123!, Test456?, User@789, Demo_2023, abcこんにちは, HELLOサンプル, テスト123, メールxyz@example.com, 追加要素1, 追加要素2, Mix123あいさつ, 漢字テスト123, 新千歳空港（CTS）, 香港国際空港（HKG）]
+mixedElementsList size:30
+
+数字だけ抜き出す正規表現
+numberList:[12345, 67890]
+
+文字（アルファベット）だけ抜き出す正規表現
+alphabetList:[abcdef, XYZxyz, qwerty, asdfgh, HELLO, WORLD]
+
+英数字の大文字だけ抜き出す正規表現
+[HELLO, WORLD]
+
+漢字、ひらがな、カタカナだけ抜き出す正規表現
+kanjiList:[こんにちは, さようなら, 漢字のみ, 日本語, カタカナ, サンプル]
+
+英数字以外を抜き出す正規表現
+nonAlphanumericList:[こんにちは, さようなら, 漢字のみ, 日本語, カタカナ, サンプル]
