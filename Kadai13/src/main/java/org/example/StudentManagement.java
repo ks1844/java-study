@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class StudentManagement {
 
@@ -110,6 +111,12 @@ public class StudentManagement {
         // 終了
         System.out.println("プログラムを終了します。");
         break;
+      } else {
+        System.out.println(menuMap.keySet().stream()
+            .map(String::valueOf)
+            .collect(Collectors.joining(","))
+        +"を入力して下さい。");
+        System.out.println();
       }
     }
   }
