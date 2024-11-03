@@ -26,14 +26,6 @@ public class StudentManagement {
     menuMap.put(6, "終了");
   }
 
-  public List<Student> getStudentList() {
-    return studentList;
-  }
-
-  public void setStudentList(List<Student> studentList) {
-    this.studentList = studentList;
-  }
-
   public void inputStudentAdded() {
     // 「学生を追加」の入力を受ける
     System.out.print("学生の名前を入力してください: ");
