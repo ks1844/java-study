@@ -35,11 +35,6 @@ public class StudentManagement {
     System.out.println();
 
     // 学生リストに追加
-    addStudent(studentName, score);
-  }
-
-  public void addStudent(String studentName, int score) {
-    // 学生を追加
     studentList.add(new Student(studentName, score));
   }
 
@@ -49,11 +44,6 @@ public class StudentManagement {
     String studentName = scanner.next();
     System.out.println();
 
-    // 学生を削除
-    removeStudent(studentName);
-  }
-
-  public void removeStudent(String studentName) {
     // 学生を削除
     studentList.removeIf(student -> studentName.equals(student.getName()));
   }
@@ -67,11 +57,6 @@ public class StudentManagement {
     System.out.println();
 
     // 点数を更新
-    updateScore(studentName, score);
-  }
-
-  public void updateScore(String studentName, int score) {
-    // 点数を更新
     studentList.stream()
         .filter(student -> studentName.equals(student.getName()))
         .forEach(student -> student.setScore(score));
@@ -82,7 +67,7 @@ public class StudentManagement {
     int sum = studentList.stream()
         .mapToInt(Student::getScore)
         .sum();
-    double average = studentList.isEmpty() ? 0 : (double)sum / studentList.size();
+    double average = studentList.isEmpty() ? 0 : (double) sum / studentList.size();
 
     System.out.printf("平均点：　%.1f点\n\n", average);
   }
