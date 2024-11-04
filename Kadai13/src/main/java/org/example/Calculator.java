@@ -1,20 +1,17 @@
 package org.example;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Calculator {
 
+  Scanner scanner = new Scanner(System.in);
+
   public void run() {
-    // String型で入力を受ける
-    Scanner scanner = new Scanner(System.in);
-    System.out.print("1番目の数字を入力してください: ");
-    int firstNumber = scanner.nextInt();
-
-    System.out.print("演算子を入力してください (+, -, *, /): ");
-    String operator = scanner.next();
-
-    System.out.print("2番目の数字を入力してください:");
-    int secondNumber = scanner.nextInt();
+    // 入力を受ける
+    int firstNumber = inputIntNumber("1番目の数字を入力してください:");
+    String operator = inputOperator("演算子を入力してください (+, -, *, /): ");
+    int secondNumber = inputIntNumber("2番目の数字を入力してください:");
 
     // 計算する
     int answer = calculate(firstNumber, operator, secondNumber);
@@ -27,15 +24,42 @@ public class Calculator {
         answer);
   }
 
-  public int calculate(int firstNumber, String operater, int secondNumber) {
-    if (operater.equals("+")) {
+  public int calculate(int firstNumber, String operator, int secondNumber) {
+    if (operator.equals("+")) {
       return firstNumber + secondNumber;
-    } else if (operater.equals("-")) {
+    } else if (operator.equals("-")) {
       return firstNumber - secondNumber;
-    } else if (operater.equals("*")) {
+    } else if (operator.equals("*")) {
       return firstNumber * secondNumber;
-    } else {
+    } else if (operator.equals("/")) {
       return firstNumber / secondNumber;
+    } else {
+      return 0;
+    }
+  }
+
+  public int inputIntNumber(String message) {
+    // 数字以外が入力されたとき再入力を受け、int型を返す
+    while (true) {
+      System.out.print(message);
+      try {
+        int number = scanner.nextInt();
+        return number;
+      } catch (InputMismatchException e) {
+        // 不正な入力を飛ばして次の入力を受ける
+        scanner.next();
+      }
+    }
+  }
+
+  public String inputOperator(String message) {
+    // 「+-*/」以外が入力されたとき再入力を受け、文字列型の演算子を返す
+    while (true) {
+      System.out.print(message);
+      String operator = scanner.next();
+      if ("+-*/".contains(operator)) {
+        return operator;
+      }
     }
   }
 }

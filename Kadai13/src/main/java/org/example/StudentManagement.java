@@ -115,7 +115,7 @@ public class StudentManagement {
         System.out.println(menuMap.keySet().stream()
             .map(String::valueOf)
             .collect(Collectors.joining(","))
-        +"を入力して下さい。");
+            + "を入力して下さい。");
         System.out.println();
       }
     }

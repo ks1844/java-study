@@ -5,17 +5,18 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class Student {
+
   private String name;
   private int score;
 
 
-  public Student(){
+  public Student() {
 
   }
 
-  public Student(String name,int score){
-    this.name=name;
-    this.score=score;
+  public Student(String name, int score) {
+    this.name = name;
+    this.score = score;
   }
 
   public int getScore() {
@@ -33,8 +34,6 @@ public class Student {
   public void setName(String name) {
     this.name = name;
   }
-
-
 
 
 }
