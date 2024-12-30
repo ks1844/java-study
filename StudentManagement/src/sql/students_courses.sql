@@ -71,5 +71,9 @@ INSERT INTO students_courses VALUES (
     '03124128-1dfc-4303-b5cd-ea67eb32b7bb',
     'AWSコース',
     '2024-08-01 10:00:00',
-    '2030-01-01 00:00:00'
+    NULL
 );
+
+-- 受講生コース情報TBLを確認
+SELECT * FROM students_courses;
+desc students_courses;

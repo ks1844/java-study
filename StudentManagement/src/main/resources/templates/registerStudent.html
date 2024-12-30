@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>受講生登録</title>
+</head>
+<body>
+<h1>受講生登録</h1>
+<form th:action="@{/registerStudent}" th:object="${studentDetail}" method="post">
+
+  <div>
+    <label for="name">名前：</label>
+    <input type="text" id="name" th:field="*{student.name}" required/>
+  </div>
+
+  <div>
+    <label for="kanaName">カナ名：</label>
+    <input type="text" id="kanaName" th:field="*{student.kanaName}" required/>
+  </div>
+
+  <div>
+    <label for="nickname">ニックネーム：</label>
+    <input type="text" id="nickname" th:field="*{student.nickname}" required/>
+  </div>
+
+  <div>
+    <label for="email">メールアドレス：</label>
+    <input type="email" id="email" th:field="*{student.email}" required/>
+  </div>
+
+  <div>
+    <label for="area">地域：</label>
+    <input type="text" id="area" th:field="*{student.area}"/>
+  </div>
+
+  <div>
+    <label for="age">年齢：</label>
+    <input type="number" id="age" th:field="*{student.age}"/>
+  </div>
+
+  <div>
+    <label for="sex">性別：</label>
+    <select id="sex" th:field="*{student.sex}" required>
+      <option value="" disabled selected>選択してください</option>
+      <option value="男">男</option>
+      <option value="女">女</option>
+      <option value="その他">その他</option>
+    </select>
+  </div>
+
+
+  <div>
+    <label for="remark">備考：</label>
+    <input type="text" id="remark" th:field="*{student.remark}"/>
+  </div>
+
+  <div>
+    <button type="submit">登録</button>
+  </div>
+</form>
+</body>
+</html>

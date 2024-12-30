@@ -13,11 +13,7 @@ import raisetech.StudentManagement.repository.StudentRepository;
 @SpringBootApplication
 @RestController
 public class Application {
-
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
   }
-
-
-
 }

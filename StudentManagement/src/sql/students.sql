@@ -19,7 +19,7 @@ INSERT INTO students VALUES (
     'sasaki.makoto012@yahoo.co.jp',
     '東京都',
     22,
-    'Male'
+    '男'
 );
 
 INSERT INTO students VALUES (
@@ -30,7 +30,7 @@ INSERT INTO students VALUES (
     'aoi.nakagawa@outlook.com',
     '神奈川県',
     20,
-    'Female'
+    '女'
 );
 
 INSERT INTO students VALUES (
@@ -41,7 +41,7 @@ INSERT INTO students VALUES (
     'yuto.inoue@gmail.com',
     '大阪府',
     37,
-    'Male'
+    '男'
 );
 
 INSERT INTO students VALUES (
@@ -52,7 +52,7 @@ INSERT INTO students VALUES (
     'kaede_yoshida@icloud.com',
     '愛知県',
     42,
-    'Female'
+    '女'
 );
 
 INSERT INTO students VALUES (
@@ -63,9 +63,17 @@ INSERT INTO students VALUES (
     'hinata.ishii@protonmail.com',
     '福岡県',
     22,
-    'Other'
+    'その他'
 );
 
 -- 備考欄と削除フラグを追加
 ALTER TABLE Students ADD remark VARCHAR(100) AFTER sex;
-ALTER TABLE Students ADD isDeleted BOOLEAN AFTER remark;
+ALTER TABLE Students ADD is_deleted BOOLEAN AFTER remark;
+
+
+-- すべてのレコードの削除フラグをFALSEに設定する
+UPDATE students set is_deleted = FALSE;
+
+-- 受講生情報TBLを確認
+SELECT * FROM students;
+DESC students;

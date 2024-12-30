@@ -2,8 +2,10 @@ package raisetech.StudentManagement.service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentsCourses;
+import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
 
 @Service
@@ -37,4 +39,10 @@ public class StudentService {
         .filter(studentsCourses -> studentsCourses.getCourseName().equals("Javaコース"))
         .toList();
   }
+
+  @Transactional
+  public void registerStudent(StudentDetail studentDetail){
+    repository.registerStudent(studentDetail.getStudent());
+  }
+
 }
