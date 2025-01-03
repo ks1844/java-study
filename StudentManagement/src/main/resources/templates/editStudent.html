@@ -2,17 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>受講生登録</title>
+  <title>受講生詳細</title>
 </head>
 <body>
-<h1>受講生登録</h1>
-<form th:action="@{/registerStudent}" th:object="${studentDetail}" method="post">
-  <!-- th:actionでControllerのマッピング先へ飛ぶ -->
+<h1>受講生詳細</h1>
+<form th:action="@{/updateStudent}" th:object="${studentDetail}" method="post">
+
+  <div>
+    <label for="id">ID：</label>
+    <input type="text" id="id" th:field="*{student.id}" required/>
+  </div>
 
   <div>
     <label for="name">名前：</label>
     <input type="text" id="name" th:field="*{student.name}" required/>
-    <!-- studentDetailに紐づくフィールドstudent.nameの入力を受けstudentDetailに渡す -->
   </div>
 
   <div>
@@ -55,14 +58,27 @@
     <input type="text" id="remark" th:field="*{student.remark}"/>
   </div>
 
-  <div th:each="course,stat : *{studentsCourses}">
-    <label for="courseName">受講コース名：</label>
-    <input type="text" id="courseName"  th:id="studentsCourses[__${stat.index}__].courseName" th:field="*{studentsCourses[__${stat.index}__].courseName}"/>
+  <div>
+    <label for="isDeleted">削除フラグ：</label>
+    <!-- フィールド名の先頭にisがついているとき -->
+    <input type="checkbox" id="isDeleted" th:checked="*{student.deleted}" />
   </div>
 
+  <div th:each="course,stat : *{studentsCourses}">
+    <label for="studentCourseId">受講コースID：</label>
+    <input type="text" id="studentCourseId"  th:id="studentsCourses[__${stat.index}__].Id" th:field="*{studentsCourses[__${stat.index}__].Id}"/>
+
+    <label for="courseName">受講コース名：</label>
+    <input type="text" id="courseName"  th:id="studentsCourses[__${stat.index}__].courseName" th:field="*{studentsCourses[__${stat.index}__].courseName}"/>
+
+  </div>
+
+
   <div>
-    <button type="submit">登録</button>
+    <button type="submit">変更</button>
   </div>
 </form>
+
+
 </body>
 </html>

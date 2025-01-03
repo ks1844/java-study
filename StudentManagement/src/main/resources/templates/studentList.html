@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Thymeleafのテンプレートエンジン -->
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -18,12 +19,16 @@
     <th>年齢</th>
     <th>性別</th>
     <th>備考</th>
+    <th>キャンセル</th>
   </tr>
   </thead>
   <tbody>
+  <!-- studentListの要素をstudentDetailに入れるeachでの繰り返し処理 -->
+  <!-- ControllerからstudentListをreturnしてもらう必要がある -->
   <tr th:each="studentDetail : ${studentList}">
     <td th:text="${studentDetail.student.id}">1</td>
-    <td th:text="${studentDetail.student.name}">山田太郎</td>
+    <!-- th:textで動的に描画する文字列を設定する -->
+    <td><a th:href="@{/editStudent/{id}(id=${studentDetail.student.id})}" th:text="${studentDetail.student.name}">山田太郎</a></td>
     <td th:text="${studentDetail.student.kanaName}">ヤマダタロウ</td>
     <td th:text="${studentDetail.student.nickname}">タロー</td>
     <td th:text="${studentDetail.student.email}">taro＠example.com</td>
@@ -31,6 +36,10 @@
     <td th:text="${studentDetail.student.age}">20</td>
     <td th:text="${studentDetail.student.sex}">男性</td>
     <td th:text="${studentDetail.student.remark}">特になし</td>
+    <td>
+      <input type="checkbox" th:checked="${studentDetail.student.deleted}">
+    </td>
+
   </tr>
   </tbody>
 </table>
