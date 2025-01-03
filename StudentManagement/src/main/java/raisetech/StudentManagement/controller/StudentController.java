@@ -3,6 +3,7 @@ package raisetech.StudentManagement.controller;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,13 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.service.StudentService;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentsCourses;
 
-@Controller
+@RestController
 public class StudentController {
 
   // SpringBootで用意されているアノテーションが付いているものは自動でインスタンス生成される。
@@ -35,15 +38,14 @@ public class StudentController {
   受講生一覧画面
    */
   @GetMapping("/studentList")
-  public String getStudentList(Model model) {
+  public List<StudentDetail> getStudentList() {
     // 受講生情報TBLと受講生コース情報TBLを全権取得
     List<Student> students = service.searchStudentList();
     List<StudentsCourses> studentsCourses = service.searchStudentCourseList();
 
-    // HTMLのThymeleafに渡す変数
-    // ConverterでstudentDetailに変換
-    model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
-    return "studentList";
+    // @RestControllerに変換すると文字列を返すただの動きになり、
+    // ControllerとしてTymeleafと紐づける動きが失われ画面描画されなくなる
+    return converter.convertStudentDetails(students, studentsCourses);
   }
 
   @GetMapping("/studentListByAge30s")
@@ -110,15 +112,11 @@ public class StudentController {
   受講生情報の変更画面で入力を受け変更処理を行い、受講生一覧画面へ遷移
    */
   @PostMapping("/updateStudent")
-  public String updateStudent(@ModelAttribute StudentDetail studentDetail,BindingResult result){
-    if (result.hasErrors()) {
-      return "registerStundent";
-    }
-
+  public ResponseEntity<String> updateStudent(@RequestBody StudentDetail studentDetail){
     // 受講生情報TBLを更新
     service.updateStudent(studentDetail);
 
-    return "redirect:/studentList";
+    return ResponseEntity.ok("更新処理が成功しました。");
   }
 
 
