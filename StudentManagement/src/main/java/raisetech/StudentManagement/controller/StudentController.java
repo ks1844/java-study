@@ -8,11 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.service.StudentService;
-import raisetech.StudentManagement.data.StudentsCourse;
+import raisetech.StudentManagement.data.StudentCourse;
 
 /**
  * 受講生の検索や登録、更新などを行うREST　APIとして実行されるControllerです。
@@ -70,7 +71,7 @@ public class StudentController {
   public String newStudent(Model model) {
     // 入力を受けるstudentDetailオブジェクトを作成
     StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudentsCoursesList(Arrays.asList(new StudentsCourse()));
+    studentDetail.setStudentCourseList(Arrays.asList(new StudentCourse()));
 
     // studentDetailオブジェクトをmodelに渡す
     model.addAttribute("studentDetail", studentDetail);
@@ -101,9 +102,13 @@ public class StudentController {
   }
 
   /**
+   * 受講生の更新
+   * キャンセルフラグの更新もここで実施（論理削除）
    *
+   * @param studentDetail 受講生情報
+   * @return 実行結果
    */
-  @PostMapping("/updateStudent")
+  @PutMapping("/updateStudent")
   public ResponseEntity<String> updateStudent(@RequestBody StudentDetail studentDetail){
     // 受講生情報TBLを更新
     service.updateStudent(studentDetail);

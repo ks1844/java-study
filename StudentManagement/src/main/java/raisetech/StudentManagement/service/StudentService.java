@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentsCourse;
+import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
 
@@ -32,8 +32,8 @@ public class StudentService {
    */
   public List<StudentDetail> searchStudentList() {
     List<Student> studentList = repository.search();
-    List<StudentsCourse> studentsCoursesList = repository.searchStudentsCoursesList();
-    return converter.convertStudentDetails(studentList,studentsCoursesList);
+    List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
+    return converter.convertStudentDetails(studentList,studentCourseList);
   }
 
   /**　
@@ -45,20 +45,20 @@ public class StudentService {
    */
   public StudentDetail searchStudent(String id) {
     Student student = repository.searchStudent(id);
-    List<StudentsCourse>  studentCourses = repository.searchStudentsCourses(student.getId());
-    return new StudentDetail(student,studentCourses);
+    List<StudentCourse>  studentCourseList = repository.searchStudentCourse(student.getId());
+    return new StudentDetail(student,studentCourseList);
   }
 
   public List<Student> searchStudentsById(String id) {
-    return repository.searchStudentsById(id);
+    return repository.searchStudentById(id);
   }
 
-  public List<StudentsCourse> searchStudentsCoursesById(String id) {
-    return repository.searchStudentsCoursesById(id);
+  public List<StudentCourse> searchStudentsCoursesById(String id) {
+    return repository.searchStudentCourseById(id);
   }
 
-  public List<StudentsCourse> searchStudentsCoursesByStudentsId(String studentId){
-    return repository.searchStudentsCoursesByStudentId(studentId);
+  public List<StudentCourse> searchStudentsCoursesByStudentsId(String studentId){
+    return repository.searchStudentCourseByStudentId(studentId);
   }
 
   /**
@@ -83,22 +83,28 @@ public class StudentService {
 
     // 受講生コース情報を登録
     // 受講生コース情報のフィールドをセット
-    studentDetail.getStudentsCoursesList().forEach(studentsCourse -> {
+    studentDetail.getStudentCourseList().forEach(studentsCourse -> {
       initStudentsCourse(studentsCourse, studentCourseId, studentId);
-      repository.registerStudentsCourses(studentsCourse);
+      repository.registerStudentCourse(studentsCourse);
     });
 
     return studentDetail;
   }
 
+  /**
+   * 受講生詳細の更新
+   * 受講生と受講生コース情報をそれぞれ更新
+   *
+   * @param studentDetail 受講生詳細
+   */
   @Transactional
   public void updateStudent(StudentDetail studentDetail) {
     // 受講生情報を登録
     repository.updateStudent(studentDetail.getStudent());
 
     // 受講生コース情報を登録
-    for (StudentsCourse studentsCourse : studentDetail.getStudentsCoursesList()) {
-      repository.updateStudentsCourses(studentsCourse);
+    for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
+      repository.updateStudentCourse(studentCourse);
     }
   }
 
@@ -126,7 +132,7 @@ public class StudentService {
    * @param studentCourseId 受講生コースID
    * @param studentId 受講生ID
    */
-  private void initStudentsCourse(StudentsCourse studentsCourse, String studentCourseId,
+  private void initStudentsCourse(StudentCourse studentsCourse, String studentCourseId,
       String studentId) {
     LocalDateTime now = LocalDateTime.now();
 
