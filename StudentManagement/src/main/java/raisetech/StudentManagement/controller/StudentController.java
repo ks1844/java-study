@@ -2,23 +2,17 @@ package raisetech.StudentManagement.controller;
 
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.plaf.synth.SynthFormattedTextFieldUI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.service.StudentService;
-import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentsCourses;
+import raisetech.StudentManagement.data.StudentsCourse;
 
 /**
  * 受講生の検索や登録、更新などを行うREST　APIとして実行されるControllerです。
@@ -44,10 +38,10 @@ public class StudentController {
   }
 
   /**
-   * 受講生一覧検索
+   * 受講生詳細一覧検索
    * 全件検索を行うので、条件指定は行わない。
    *
-   * @return 受講生一覧（全件）
+   * @return 受講生詳細一覧（全件）
    */
   @GetMapping("/studentList")
   public List<StudentDetail> getStudentList() {
@@ -58,11 +52,11 @@ public class StudentController {
   }
 
   /**
-   * 受講生検索
+   * 受講生詳細検索
    * IDに紐づく任意の受講生の情報を取得する。
    *
    * @param id 受講生ID
-   * @return 受講生
+   * @return 受講生詳細
    */
   @GetMapping("/student/{id}")
   public StudentDetail getStudent(@PathVariable String id){
@@ -76,7 +70,7 @@ public class StudentController {
   public String newStudent(Model model) {
     // 入力を受けるstudentDetailオブジェクトを作成
     StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudentsCourses(Arrays.asList(new StudentsCourses()));
+    studentDetail.setStudentsCoursesList(Arrays.asList(new StudentsCourse()));
 
     // studentDetailオブジェクトをmodelに渡す
     model.addAttribute("studentDetail", studentDetail);
@@ -84,7 +78,10 @@ public class StudentController {
   }
 
   /**
-   * 受講生の登録画面で入力を受け登録処理を行い、受講生一覧画面へ遷移
+   * 受講生詳細の登録
+   *
+   * @param studentDetail 受講生詳細
+   * @return 実行結果
    */
   @PostMapping("/registerStudent")
   public ResponseEntity<StudentDetail> regiterStudent(@RequestBody StudentDetail studentDetail) {
@@ -104,7 +101,7 @@ public class StudentController {
   }
 
   /**
-   * 受講生情報の変更画面で入力を受け変更処理を行い、受講生一覧画面へ遷移
+   *
    */
   @PostMapping("/updateStudent")
   public ResponseEntity<String> updateStudent(@RequestBody StudentDetail studentDetail){

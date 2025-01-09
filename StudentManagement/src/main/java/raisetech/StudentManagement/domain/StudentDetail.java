@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentsCourses;
+import raisetech.StudentManagement.data.StudentsCourse;
 
 @Getter
 @Setter
@@ -15,6 +14,6 @@ import raisetech.StudentManagement.data.StudentsCourses;
 @AllArgsConstructor
 public class StudentDetail {
   private Student student;
-  private List<StudentsCourses> studentsCourses;
+  private List<StudentsCourse> studentsCoursesList;
 
 }

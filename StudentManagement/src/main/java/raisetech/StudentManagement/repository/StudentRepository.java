@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentsCourses;
+import raisetech.StudentManagement.data.StudentsCourse;
 
 /**
  * 受講生情報テーブルと受講生コース情報テーブルに紐づくRepository
@@ -38,7 +38,7 @@ public interface StudentRepository {
    * @return 受講生のコース情報（全件）
    */
   @Select("SELECT * from students_courses")
-  List<StudentsCourses> searchStudentsCoursesList();
+  List<StudentsCourse> searchStudentsCoursesList();
 
   /**
    * 受講生IDに紐づく受講生コース情報を検索
@@ -47,7 +47,7 @@ public interface StudentRepository {
    * @return 受講生IDに紐づく受講生コース情報
    */
   @Select("SELECT * from students_courses WHERE student_id = #{studentId}")
-  List<StudentsCourses> searchStudentsCourses(String studentId);
+  List<StudentsCourse> searchStudentsCourses(String studentId);
 
 
   @Select("SELECT * FROM students WHERE is_deleted = FALSE")
@@ -57,7 +57,7 @@ public interface StudentRepository {
   List<Student> searchStudentsById(String id);
 
   @Select("SELECT * FROM students_courses WHERE id = #{id}")
-  List<StudentsCourses> searchStudentsCoursesById(String id);
+  List<StudentsCourse> searchStudentsCoursesById(String id);
 
   // TODO: MySQLのUUID()で自動生成されたidを取得してstudentのidフィールドにならないため保留
   //@Insert("INSERT INTO students (id, name, kana_name, nickname, email, area, age, sex, remark, is_deleted) " +
@@ -79,15 +79,15 @@ public interface StudentRepository {
   @Insert("INSERT INTO students_courses (id, student_id, course_name, course_start_at, course_end_at) "
       + "VALUES (#{id}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt} )")
   @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-  void registerStudentsCourses(StudentsCourses studentsCourses);
+  void registerStudentsCourses(StudentsCourse studentsCourses);
 
   @Select("SELECT * FROM students_courses WHERE student_id = #{studentId}")
-  List<StudentsCourses> searchStudentsCoursesByStudentId(String studentId);
+  List<StudentsCourse> searchStudentsCoursesByStudentId(String studentId);
 
   @Update("UPDATE students SET name= #{name}, kana_name = #{kanaName}, nickname = #{nickname}, "
       + "email = #{email}, area = #{area}, age = #{age}, sex = #{sex}, remark = #{remark}, is_deleted = #{isDeleted} WHERE id = #{id}")
   void updateStudent(Student student);
 
   @Insert("UPDATE students_courses SET course_name = #{courseName} WHERE id = #{id}")
-  void updateStudentsCourses(StudentsCourses studentsCourses);
+  void updateStudentsCourses(StudentsCourse studentsCourses);
 }

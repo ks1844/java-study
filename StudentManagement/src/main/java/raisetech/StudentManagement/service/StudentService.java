@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentsCourses;
+import raisetech.StudentManagement.data.StudentsCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
 
@@ -25,27 +25,27 @@ public class StudentService {
   }
 
   /**
-   * 受講生一覧検索
+   * 受講生詳細一覧検索
    * 全件検索を行うので、条件指定は行いません。
    *
-   * @return 受講生一覧（全件）
+   * @return 受講生詳細一覧（全件）
    */
   public List<StudentDetail> searchStudentList() {
     List<Student> studentList = repository.search();
-    List<StudentsCourses> studentsCoursesList = repository.searchStudentsCoursesList();
+    List<StudentsCourse> studentsCoursesList = repository.searchStudentsCoursesList();
     return converter.convertStudentDetails(studentList,studentsCoursesList);
   }
 
   /**　
-   * 受講生検索
+   * 受講生詳細検索
    * IDに紐づく受講生情報を取得した後、その受講生に紐づく受講生コース情報を取得して設定します。
    *
    * @param id 受講生ID
-   * @return 受講生情報
+   * @return 受講生詳細情報
    */
   public StudentDetail searchStudent(String id) {
     Student student = repository.searchStudent(id);
-    List<StudentsCourses>  studentCourses = repository.searchStudentsCourses(student.getId());
+    List<StudentsCourse>  studentCourses = repository.searchStudentsCourses(student.getId());
     return new StudentDetail(student,studentCourses);
   }
 
@@ -53,35 +53,40 @@ public class StudentService {
     return repository.searchStudentsById(id);
   }
 
-  public List<StudentsCourses> searchStudentsCoursesById(String id) {
+  public List<StudentsCourse> searchStudentsCoursesById(String id) {
     return repository.searchStudentsCoursesById(id);
   }
 
-  public List<StudentsCourses> searchStudentsCoursesByStudentsId(String studentId){
+  public List<StudentsCourse> searchStudentsCoursesByStudentsId(String studentId){
     return repository.searchStudentsCoursesByStudentId(studentId);
   }
 
+  /**
+   * 受講生詳細の登録
+   * 受講生と受講生コース情報を個別に登録し、受講生コース情報には受講生情報を紐づける値とコース開始日とコース終了日を設定
+   *
+   * @param studentDetail 受講生詳細
+   * @return 登録情報を付与した受講生詳細
+   */
   @Transactional
   public StudentDetail registerStudent(StudentDetail studentDetail) {
     // 受講生情報のuuidを生成し、受講生情報にセット
     String studentId = generateUUID();
-    studentDetail.getStudent().setId(studentId);
+    Student student = studentDetail.getStudent();
+    student.setId(studentId);
 
     // 受講生情報を登録
-    repository.registerStudent(studentDetail.getStudent());
+    repository.registerStudent(student);
 
     // 受国政コース情報のUUIDを生成
     String studentCourseId = generateUUID();
 
     // 受講生コース情報を登録
-    for (StudentsCourses studentsCourse : studentDetail.getStudentsCourses()) {
-      // 受講生コース情報のフィールドをセット
-      studentsCourse.setId(studentCourseId);
-      studentsCourse.setStudentId(studentId);
-      studentsCourse.setCourseStartAt(LocalDateTime.now());
-      studentsCourse.setCourseEndAt(studentsCourse.getCourseStartAt().plusYears(1));
+    // 受講生コース情報のフィールドをセット
+    studentDetail.getStudentsCoursesList().forEach(studentsCourse -> {
+      initStudentsCourse(studentsCourse, studentCourseId, studentId);
       repository.registerStudentsCourses(studentsCourse);
-    }
+    });
 
     return studentDetail;
   }
@@ -92,16 +97,16 @@ public class StudentService {
     repository.updateStudent(studentDetail.getStudent());
 
     // 受講生コース情報を登録
-    for (StudentsCourses studentsCourse : studentDetail.getStudentsCourses()) {
+    for (StudentsCourse studentsCourse : studentDetail.getStudentsCoursesList()) {
       repository.updateStudentsCourses(studentsCourse);
     }
   }
 
-  /*
-  DBで重複しないUUIDを生成する。
-  TODO:　repositoryでのOptionsアノテーションでidがStudentクラスにセットされないため、JavaでUUID管理するために一時的に作成した。
+  /**
+  * DBで重複しないUUIDを生成する。
+  * TODO:　repositoryでのOptionsアノテーションでidがStudentクラスにセットされないため、JavaでUUID管理するために一時的に作成した。
    */
-  private String generateUUID() {
+  private String  generateUUID() {
     String uuid;
     while (true) {
       uuid = String.valueOf(UUID.randomUUID());
@@ -112,6 +117,23 @@ public class StudentService {
         return uuid;
       }
     }
+  }
+
+  /**
+   * 受講生コース情報を登録する際の初期情報を設定
+   *
+   * @param studentsCourse 受講生コース情報
+   * @param studentCourseId 受講生コースID
+   * @param studentId 受講生ID
+   */
+  private void initStudentsCourse(StudentsCourse studentsCourse, String studentCourseId,
+      String studentId) {
+    LocalDateTime now = LocalDateTime.now();
+
+    studentsCourse.setId(studentCourseId);
+    studentsCourse.setStudentId(studentId);
+    studentsCourse.setCourseStartAt(now);
+    studentsCourse.setCourseEndAt(now.plusYears(1));
   }
 
 }
