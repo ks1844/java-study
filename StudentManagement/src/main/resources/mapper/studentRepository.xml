@@ -2,17 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="raisetech.StudentManagement.repository.StudentRepository">
 
-  <!--  受講生の全権選択-->
+  <!-- 受講生の全件検索 -->
   <select id="search" resultType="raisetech.StudentManagement.data.Student">
     SELECT *
     FROM students
   </select>
 
-  <!--  受講生の選択-->
+  <!-- 受講生の検索 -->
   <select id="searchStudent" resultType="raisetech.StudentManagement.data.Student">
     SELECT *
     FROM students
     WHERE id = #{id}
   </select>
+
+  <!-- 受講生IDに紐づく受講生コース情報の検索　-->
+  <select id="searchStudentCourseList" resultType="raisetech.StudentManagement.data.Student">
+    SELECT *
+    FROM　students_courses
+    WHERE student_id = #{studentId}
+  </select>
+
+  <!-- 受講生の登録 -->
+  <insert id="registerStudent">
+    INSERT INTO students (
+    id, name, kana_name, nickname, email, area, age, sex, remark, is_deleted
+    ) VALUES (
+    #{id}, #{name}, #{kanaName}, #{nickname}, #{email}, #{area}, #{age}, #{sex}, #{remark}, FALSE
+    )
+  </insert>
+
+  <!-- 受講生コース情報の登録 -->
+  <insert id="registerStudentCourse">
+    INSERT INTO students_courses (
+    id, student_id, course_name, course_start_at, course_end_at
+    ) VALUES (
+    #{id}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt}
+    )
+  </insert>
 
 </mapper>

@@ -35,7 +35,7 @@ public interface StudentRepository {
    *
    * @return 受講生のコース情報（全件）
    */
-  @Select("SELECT * from students_courses")
+  //@Select("SELECT * from students_courses")
   List<StudentCourse> searchStudentCourseList();
 
   /**
@@ -46,10 +46,6 @@ public interface StudentRepository {
    */
   @Select("SELECT * from students_courses WHERE student_id = #{studentId}")
   List<StudentCourse> searchStudentCourse(String studentId);
-
-
-  @Select("SELECT * FROM students WHERE is_deleted = FALSE")
-  List<Student> searchStudentsNotDeleted();
 
   @Select("SELECT * FROM students WHERE id = #{id}")
   List<Student> searchStudentById(String id);
@@ -69,14 +65,8 @@ public interface StudentRepository {
   //@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
   //void registerStudentsCourses(StudentsCourses studentsCourses);
 
-  @Insert("INSERT INTO students (id, name, kana_name, nickname, email, area, age, sex, remark, is_deleted) " +
-      "VALUES (#{id}, #{name}, #{kanaName}, #{nickname}, #{email}, #{area}, #{age}, #{sex}, #{remark}, FALSE)")
-  @Options(useGeneratedKeys = true, keyProperty = "student.id", keyColumn = "id")
   void registerStudent(Student student);
 
-  @Insert("INSERT INTO students_courses (id, student_id, course_name, course_start_at, course_end_at) "
-      + "VALUES (#{id}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt} )")
-  @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
   void registerStudentCourse(StudentCourse studentCourse);
 
   @Select("SELECT * FROM students_courses WHERE student_id = #{studentId}")
