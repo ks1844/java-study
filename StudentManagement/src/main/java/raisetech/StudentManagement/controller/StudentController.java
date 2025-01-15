@@ -1,10 +1,18 @@
 package raisetech.StudentManagement.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,12 +20,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.StudentManagement.domain.StudentDetail;
+import raisetech.StudentManagement.exception.TestException;
 import raisetech.StudentManagement.service.StudentService;
 import raisetech.StudentManagement.data.StudentCourse;
 
 /**
  * 受講生の検索や登録、更新などを行うREST　APIとして実行されるControllerです。
  */
+@Validated
 @RestController
 public class StudentController {
 
@@ -45,11 +55,12 @@ public class StudentController {
    * @return 受講生詳細一覧（全件）
    */
   @GetMapping("/studentList")
-  public List<StudentDetail> getStudentList() {
-
+  public List<StudentDetail> getStudentList() throws TestException {
     // @RestControllerに変換すると文字列を返すただの動きになり、
     // ControllerとしてTymeleafと紐づける動きが失われ画面描画されなくなる
-    return service.searchStudentList();
+
+    throw new TestException("現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
+    //return service.searchStudentList();
   }
 
   /**
@@ -59,8 +70,9 @@ public class StudentController {
    * @param id 受講生ID
    * @return 受講生詳細
    */
+  // TODO: idにUUIDがマッチする正規表現で@Patternを付与する
   @GetMapping("/student/{id}")
-  public StudentDetail getStudent(@PathVariable String id){
+  public StudentDetail getStudent(@PathVariable @NotBlank String id){
     return service.searchStudent(id);
   }
 
@@ -85,7 +97,7 @@ public class StudentController {
    * @return 実行結果
    */
   @PostMapping("/registerStudent")
-  public ResponseEntity<StudentDetail> regiterStudent(@RequestBody StudentDetail studentDetail) {
+  public ResponseEntity<StudentDetail> regiterStudent(@RequestBody @Validated StudentDetail studentDetail) {
     // 新規受講生を登録する処理を実装する。
     StudentDetail responceStudentDetail = service.registerStudent(studentDetail);
     // コース情報も一緒に登録できるように実装する。コースは単体で良い。
@@ -96,7 +108,7 @@ public class StudentController {
    * 受講生情報の変更画面へ遷移
    */
   @GetMapping("/editStudent/{id}")
-  public String editStudent(@PathVariable("id") String id, Model model){
+  public String editStudent(@PathVariable("id") @Size(max=36) String id, Model model){
     model.addAttribute("studentDetail", service.searchStudent(id));
     return "editStudent";
   }
@@ -109,11 +121,15 @@ public class StudentController {
    * @return 実行結果
    */
   @PutMapping("/updateStudent")
-  public ResponseEntity<String> updateStudent(@RequestBody StudentDetail studentDetail){
+  public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail){
     // 受講生情報TBLを更新
     service.updateStudent(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
   }
 
+  @ExceptionHandler(TestException.class)
+  public ResponseEntity<String> handleTestException(TestException ex){
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+  }
 
 }

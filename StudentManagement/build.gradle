@@ -29,7 +29,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// Thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
+	// Validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation:3.4.1'
 
 	// Apache Commons Lang
 	implementation 'org.apache.commons:commons-lang3:3.17.0'
