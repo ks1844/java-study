@@ -58,9 +58,7 @@ public class StudentController {
   public List<StudentDetail> getStudentList() throws TestException {
     // @RestControllerに変換すると文字列を返すただの動きになり、
     // ControllerとしてTymeleafと紐づける動きが失われ画面描画されなくなる
-
-    throw new TestException("現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
-    //return service.searchStudentList();
+    return service.searchStudentList();
   }
 
   /**
@@ -125,6 +123,18 @@ public class StudentController {
     // 受講生情報TBLを更新
     service.updateStudent(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
+  }
+
+  /**
+   * 例外を発生させるテスト用のメソッド
+   *
+   * @param model
+   * @throws TestException
+   */
+  // TODo: Exception専用のクラスを作り、Controller以外で例外が発生してもキャッチできるようにする
+  @GetMapping("/ExceptionTest")
+  public void throwTestException(Model model) throws TestException {
+    throw new TestException("現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
   }
 
   @ExceptionHandler(TestException.class)
