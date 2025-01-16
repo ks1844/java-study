@@ -9,6 +9,7 @@ import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
+import raisetech.StudentManagement.exception.TestException;
 import raisetech.StudentManagement.repository.StudentRepository;
 
 /**
@@ -30,7 +31,7 @@ public class StudentService {
    *
    * @return 受講生詳細一覧（全件）
    */
-  public List<StudentDetail> searchStudentList() {
+  public List<StudentDetail> searchStudentList(){
     List<Student> studentList = repository.search();
     List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
     return converter.convertStudentDetails(studentList,studentCourseList);

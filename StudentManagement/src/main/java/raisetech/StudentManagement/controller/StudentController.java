@@ -137,9 +137,4 @@ public class StudentController {
     throw new TestException("現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
   }
 
-  @ExceptionHandler(TestException.class)
-  public ResponseEntity<String> handleTestException(TestException ex){
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-  }
-
 }
