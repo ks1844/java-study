@@ -31,6 +31,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	// Validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation:3.4.1'
+	// OpenAPI Generator
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 
 	// Apache Commons Lang
 	implementation 'org.apache.commons:commons-lang3:3.17.0'
