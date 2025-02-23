@@ -16,11 +16,11 @@
   </select>
 
   <!-- 受講生IDに紐づく受講生コース情報の検索　-->
-  <select id="searchStudentCourseList" resultType="raisetech.StudentManagement.data.Student">
+  <select id="searchStudentCourseList" resultType="raisetech.StudentManagement.data.StudentCourse">
     SELECT *
-    FROM　students_courses
-    WHERE student_id = #{studentId}
+    FROM students_courses
   </select>
+  <!--    WHERE student_id = #{studentId}-->
 
   <!-- 受講生の登録 -->
   <insert id="registerStudent">
