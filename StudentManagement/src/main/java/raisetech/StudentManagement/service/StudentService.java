@@ -10,7 +10,6 @@ import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
-import raisetech.StudentManagement.exception.TestException;
 import raisetech.StudentManagement.repository.StudentRepository;
 
 /**
@@ -47,8 +46,8 @@ public class StudentService {
    * @return 受講生詳細情報
    */
   public StudentDetail searchStudent(String id) {
-    Student student = repository.searchStudent(id);
-    List<StudentCourse>  studentCourseList = repository.searchStudentCourse(student.getId());
+    Student student = repository.updateStudent(id);
+    List<StudentCourse>  studentCourseList = repository.updateStudentCourse(student.getId());
     return new StudentDetail(student,studentCourseList);
   }
 
@@ -58,10 +57,6 @@ public class StudentService {
 
   public List<StudentCourse> searchStudentsCoursesById(String id) {
     return repository.searchStudentCourseById(id);
-  }
-
-  public List<StudentCourse> searchStudentsCoursesByStudentsId(String studentId){
-    return repository.searchStudentCourseByStudentId(studentId);
   }
 
   /**
@@ -81,7 +76,7 @@ public class StudentService {
     // 受講生情報を登録
     repository.registerStudent(student);
 
-    // 受国政コース情報のUUIDを生成
+    // 受講生コース情報のUUIDを生成
     String studentCourseId = generateUUID();
 
     // 受講生コース情報を登録
@@ -135,7 +130,8 @@ public class StudentService {
    * @param studentCourseId 受講生コースID
    * @param studentId 受講生ID
    */
-  private void initStudentsCourse(StudentCourse studentsCourse, String studentCourseId,
+  //private void initStudentsCourse(StudentCourse studentsCourse, String studentCourseId,
+  void initStudentsCourse(StudentCourse studentsCourse, String studentCourseId,
       String studentId) {
     LocalDateTime now = LocalDateTime.now();
 

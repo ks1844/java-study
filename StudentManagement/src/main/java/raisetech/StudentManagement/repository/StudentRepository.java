@@ -1,11 +1,8 @@
 package raisetech.StudentManagement.repository;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 
@@ -28,7 +25,7 @@ public interface StudentRepository {
    * @param id 受講生ID
    * @return 受講生
    */
-  Student searchStudent(String id);
+  Student updateStudent(String id);
 
   /**
    * 受講生のコース情報の全件検索
@@ -45,7 +42,7 @@ public interface StudentRepository {
    * @return 受講生IDに紐づく受講生コース情報
    */
   @Select("SELECT * from students_courses WHERE student_id = #{studentId}")
-  List<StudentCourse> searchStudentCourse(String studentId);
+  List<StudentCourse> updateStudentCourse(String studentId);
 
   @Select("SELECT * FROM students WHERE id = #{id}")
   List<Student> searchStudentById(String id);

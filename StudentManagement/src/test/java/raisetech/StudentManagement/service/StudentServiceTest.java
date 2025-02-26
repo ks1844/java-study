@@ -1,5 +1,7 @@
 package raisetech.StudentManagement.service;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +20,7 @@ import raisetech.StudentManagement.repository.StudentRepository;
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
 
-  // モック
+  // Mockitが用意しているモック
   @Mock
   private StudentRepository repository;
 
@@ -49,7 +51,6 @@ class StudentServiceTest {
     //　3.後処理
 
     // 4.検証
-
     Assertions.assertEquals(expected, actual);
     // 呼び出された回数の検証
     Mockito.verify(repository, Mockito.times(1)).search();
@@ -58,6 +59,72 @@ class StudentServiceTest {
         .convertStudentDetails(studentList, studentCourseList);
   }
 
+  @Test
+  void 受講生詳細の検索_リポジトリの処理が適切に呼び出せていること(){
+    String id = "999";
+    List<Student> studentList = new ArrayList<>();
+    List<StudentCourse> studentCourseList = new ArrayList<>();
+    Student student = new Student();
+    student.setId(id);
 
+    // 戻り値を指定
+    Mockito.when(repository.updateStudent(id)).thenReturn(student);
+    Mockito.when(repository.updateStudentCourse(id)).thenReturn(new ArrayList<>());
+
+    StudentDetail expected = new StudentDetail(student,new ArrayList<>());
+    StudentDetail actual = sut.searchStudent(id);
+
+    // 呼び出された回数の検証
+    Mockito.verify(repository, Mockito.times(1)).updateStudent(id);
+    Mockito.verify(repository, Mockito.times(1)).updateStudentCourse(id);
+
+    // 中身の内容の一致を確認
+    Assertions.assertEquals(expected.getStudent().getId(), actual.getStudent().getId());
+  }
+
+  @Test
+  void 受講生詳細の登録_リポジトリの処理が適切に呼び出せていること(){
+    Student student = new Student();
+    StudentCourse studentCourse = new StudentCourse();
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
+    StudentDetail studentDetail = new StudentDetail(student,studentCourseList);
+
+    sut.registerStudent(studentDetail);
+
+    // 呼び出された回数の検証
+    Mockito.verify(repository, Mockito.times(1)).registerStudent(student);
+    Mockito.verify(repository, Mockito.times(1)).registerStudentCourse(studentCourse);
+
+  }
+
+  @Test
+  void 受講生詳細の更新_リポジトリの処理が適切に呼び出せていること(){
+    Student student = new Student();
+    StudentCourse studentCourse = new StudentCourse();
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
+    StudentDetail studentDetail = new StudentDetail(student,studentCourseList);
+
+    sut.updateStudent(new StudentDetail(student,studentCourseList));
+
+    // 呼び出された回数の検証
+    Mockito.verify(repository, Mockito.times(1)).updateStudent(student);
+    Mockito.verify(repository, Mockito.times(1)).updateStudentCourse(studentCourse);
+
+  }
+
+  @Test
+  void 受講生詳細の登録_初期化処理が行われること(){
+    String studentId = "999";
+    String studentCourseId = "999";
+    StudentCourse studentCourse = new StudentCourse();
+
+    sut.initStudentsCourse(studentCourse,studentCourseId,studentId);
+
+    Assertions.assertEquals(studentId,studentCourse.getStudentId());
+    Assertions.assertEquals(LocalDateTime.now().getHour(),studentCourse.getCourseStartAt().getHour());
+    Assertions.assertEquals(LocalDateTime.now().plusYears(1).getYear(),studentCourse.getCourseEndAt().getYear());
+
+
+  }
 
 }
