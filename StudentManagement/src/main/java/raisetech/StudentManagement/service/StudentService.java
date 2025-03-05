@@ -97,10 +97,10 @@ public class StudentService {
    */
   @Transactional
   public void updateStudent(StudentDetail studentDetail) {
-    // 受講生情報を登録
+    // 受講生情報を更新
     repository.updateStudent(studentDetail.getStudent());
 
-    // 受講生コース情報を登録
+    // 受講生コース情報を更新
     for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
       repository.updateStudentCourse(studentCourse);
     }
@@ -130,7 +130,10 @@ public class StudentService {
    * @param studentCourseId 受講生コースID
    * @param studentId 受講生ID
    */
+<<<<<<< HEAD
   //private void initStudentsCourse(StudentCourse studentsCourse, String studentCourseId,
+=======
+>>>>>>> f374d08 (コントローラとコンバータのテストを追加)
   void initStudentsCourse(StudentCourse studentsCourse, String studentCourseId,
       String studentId) {
     LocalDateTime now = LocalDateTime.now();

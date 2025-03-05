@@ -1,5 +1,6 @@
 package raisetech.StudentManagement.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -57,7 +58,7 @@ public class StudentController {
   @GetMapping("/studentList")
   public List<StudentDetail> getStudentList() throws TestException {
     // @RestControllerに変換すると文字列を返すただの動きになり、
-    // ControllerとしてTymeleafと紐づける動きが失われ画面描画されなくなる
+    // ControllerとしてThymeleafと紐づける動きが失われ画面描画されなくなる
     return service.searchStudentList();
   }
 
@@ -69,8 +70,9 @@ public class StudentController {
    * @return 受講生詳細
    */
   // TODO: idにUUIDがマッチする正規表現で@Patternを付与する
+  @Operation(summary = "受講生検索",description = "受講生を検索します。")
   @GetMapping("/student/{id}")
-  public StudentDetail getStudent(@PathVariable @NotBlank String id){
+  public StudentDetail getStudent(@PathVariable @NotBlank @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})+$") String id){
     return service.searchStudent(id);
   }
 
@@ -95,7 +97,7 @@ public class StudentController {
    * @return 実行結果
    */
   @PostMapping("/registerStudent")
-  public ResponseEntity<StudentDetail> regiterStudent(@RequestBody @Validated StudentDetail studentDetail) {
+  public ResponseEntity<StudentDetail> regiterStudent(@RequestBody @Valid StudentDetail studentDetail) {
     // 新規受講生を登録する処理を実装する。
     StudentDetail responceStudentDetail = service.registerStudent(studentDetail);
     // コース情報も一緒に登録できるように実装する。コースは単体で良い。
@@ -132,9 +134,9 @@ public class StudentController {
    * @throws TestException
    */
   // TODo: Exception専用のクラスを作り、Controller以外で例外が発生してもキャッチできるようにする
-  @GetMapping("/ExceptionTest")
+  @GetMapping("/exceptionTest")
   public void throwTestException(Model model) throws TestException {
-    throw new TestException("現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
+    throw new TestException("現在このAPIは利用できません。古いURLとなっています。");
   }
 
 }
