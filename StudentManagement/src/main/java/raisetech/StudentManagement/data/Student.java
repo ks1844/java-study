@@ -10,12 +10,7 @@ import lombok.Setter;
 @Setter
 public class Student {
 
-<<<<<<< HEAD
-  @NotBlank
-  @Pattern(regexp = "^\\d$",message="数字のみ入力するようにしてください。")
-=======
   @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "数字のみ入力するようにしてください。")
->>>>>>> f374d08 (コントローラとコンバータのテストを追加)
   private String id;
 
   @NotBlank

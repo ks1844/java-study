@@ -25,7 +25,7 @@ public interface StudentRepository {
    * @param id 受講生ID
    * @return 受講生
    */
-  Student updateStudent(String id);
+  Student searchStudent(String id);
 
   /**
    * 受講生のコース情報の全件検索
@@ -42,7 +42,7 @@ public interface StudentRepository {
    * @return 受講生IDに紐づく受講生コース情報
    */
   @Select("SELECT * from students_courses WHERE student_id = #{studentId}")
-  List<StudentCourse> updateStudentCourse(String studentId);
+  List<StudentCourse> searchStudentCourse(String studentId);
 
   @Select("SELECT * FROM students WHERE id = #{id}")
   List<Student> searchStudentById(String id);

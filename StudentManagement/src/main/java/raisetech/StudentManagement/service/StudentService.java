@@ -46,8 +46,8 @@ public class StudentService {
    * @return 受講生詳細情報
    */
   public StudentDetail searchStudent(String id) {
-    Student student = repository.updateStudent(id);
-    List<StudentCourse>  studentCourseList = repository.updateStudentCourse(student.getId());
+    Student student = repository.searchStudent(id);
+    List<StudentCourse>  studentCourseList = repository.searchStudentCourse(student.getId());
     return new StudentDetail(student,studentCourseList);
   }
 
@@ -130,10 +130,6 @@ public class StudentService {
    * @param studentCourseId 受講生コースID
    * @param studentId 受講生ID
    */
-<<<<<<< HEAD
-  //private void initStudentsCourse(StudentCourse studentsCourse, String studentCourseId,
-=======
->>>>>>> f374d08 (コントローラとコンバータのテストを追加)
   void initStudentsCourse(StudentCourse studentsCourse, String studentCourseId,
       String studentId) {
     LocalDateTime now = LocalDateTime.now();

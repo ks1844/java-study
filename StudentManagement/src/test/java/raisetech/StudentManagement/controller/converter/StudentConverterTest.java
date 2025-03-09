@@ -64,7 +64,7 @@ class StudentConverterTest {
     // 受講生情報のテストデータを作成
     Student student = createStudent();
 
-    // 受講生コース情報のテストデータw作成
+    // 受講生コース情報のテストデータを作成
     StudentCourse studentCourse = new StudentCourse();
     studentCourse.setId("8888eeee-88ee-88ee-88ee-888888eeeeee");
     studentCourse.setStudentId("7777dddd-77dd-77dd-77dd-777777dddddd");
@@ -80,7 +80,7 @@ class StudentConverterTest {
     List<StudentDetail> actual = sut.convertStudentDetails(studentList,studentCourseList);
 
     // 検証
-    Assertions.assertEquals(0,actual.size());
+    Assertions.assertEquals(1,actual.size());
     Assertions.assertEquals(0,actual.getFirst().getStudentCourseList().size());
     Assertions.assertEquals(student,actual.getFirst().getStudent());
     Assertions.assertEquals(new ArrayList<>(),actual.getFirst().getStudentCourseList());

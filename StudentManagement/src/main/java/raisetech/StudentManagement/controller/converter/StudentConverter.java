@@ -36,29 +36,4 @@ public class StudentConverter {
     return studentDetails;
   }
 
-  /**
-   * convertStudentDetailsのStreamAPIで記述しないコーディング
-   *
-   * @param studentList        受講生一覧
-   * @param studentsCourses 受講生コース情報のリスト
-   * @return 受講生詳細情報のリスト
-   */
-  public List<StudentDetail> convertStudentDetailsNoStream(List<Student> studentList,List<StudentCourse> studentsCourses){
-    List<StudentDetail> studentDetails = new ArrayList<>();
-
-    for(Student student:studentList){
-      StudentDetail studentDetail = new StudentDetail();
-      studentDetail.setStudent(student);
-
-      List<StudentCourse> convertStudentCourses = studentsCourses.stream()
-          .filter(studentsCourse -> student.getId().equals(studentsCourse.getStudentId()))
-          .collect(Collectors.toList());
-
-      studentDetail.setStudentCourseList(convertStudentCourses);
-      studentDetails.add(studentDetail);
-    }
-    return studentDetails;
-  }
-
-
 }
