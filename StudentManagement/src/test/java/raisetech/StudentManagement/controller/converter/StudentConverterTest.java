@@ -28,7 +28,7 @@ class StudentConverterTest {
     // 受講生のテストデータを作成
     Student student = createStudent();
 
-    // 受講生コース情報のテストデータを作成
+    // 受講生コース情報のテストデータ2件を作成
     StudentCourse studentCourse1 = new StudentCourse();
     studentCourse1.setId("8888eeee-88ee-88ee-88ee-888888eeeeee");
     studentCourse1.setStudentId(student.getId());
@@ -59,7 +59,7 @@ class StudentConverterTest {
   }
 
   @Test
-  void 受講生IDと紐づかない受講生コース情報は除外されること(){
+  void 受講生IDと一致しない受講生コース情報はリストに追加されないこと(){
 
     // 受講生情報のテストデータを作成
     Student student = createStudent();
