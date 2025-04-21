@@ -1,6 +1,5 @@
 package raisetech.StudentManagement.service;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,14 +68,14 @@ class StudentServiceTest {
 
     // 戻り値を指定
     Mockito.when(repository.searchStudent(id)).thenReturn(student);
-    Mockito.when(repository.searchStudentCourse(id)).thenReturn(new ArrayList<>());
+    Mockito.when(repository.searchStudentCourseListByStudentId(id)).thenReturn(new ArrayList<>());
 
     StudentDetail expected = new StudentDetail(student,new ArrayList<>());
     StudentDetail actual = sut.searchStudent(id);
 
     // 呼び出された回数の検証
     Mockito.verify(repository, Mockito.times(1)).searchStudent(id);
-    Mockito.verify(repository, Mockito.times(1)).searchStudentCourse(id);
+    Mockito.verify(repository, Mockito.times(1)).searchStudentCourseListByStudentId(id);
 
     // 中身の内容の一致を確認
     Assertions.assertEquals(expected.getStudent().getId(), actual.getStudent().getId());
