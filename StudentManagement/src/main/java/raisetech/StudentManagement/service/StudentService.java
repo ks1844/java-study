@@ -2,6 +2,7 @@ package raisetech.StudentManagement.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,16 +48,8 @@ public class StudentService {
    */
   public StudentDetail searchStudent(String id) {
     Student student = repository.searchStudent(id);
-    List<StudentCourse>  studentCourseList = repository.searchStudentCourse(student.getId());
+    List<StudentCourse>  studentCourseList = repository.searchStudentCourseListByStudentId(id);
     return new StudentDetail(student,studentCourseList);
-  }
-
-  public List<Student> searchStudentsById(String id) {
-    return repository.searchStudentById(id);
-  }
-
-  public List<StudentCourse> searchStudentsCoursesById(String id) {
-    return repository.searchStudentCourseById(id);
   }
 
   /**
@@ -114,8 +107,9 @@ public class StudentService {
     String uuid;
     while (true) {
       uuid = String.valueOf(UUID.randomUUID());
-      int studentIddDuplicateCount = searchStudentsById(uuid).size();
-      int studentsCoursesIdDuplicateCount = searchStudentsCoursesById(uuid).size();
+      StudentDetail studentDetail = searchStudent(uuid);
+      int studentIddDuplicateCount = Objects.isNull(studentDetail.getStudent()) ? 0:1;
+      int studentsCoursesIdDuplicateCount = Objects.isNull(repository.searchStudentCourse(uuid)) ? 0:1;
       int uuidDuplicateCount = studentIddDuplicateCount + studentsCoursesIdDuplicateCount;
       if (uuidDuplicateCount == 0) {
         return uuid;

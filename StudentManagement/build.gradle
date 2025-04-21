@@ -40,15 +40,24 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-
 	// MySQLドライバ
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	// MyBatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 
+	//　APサーバ（Tomcat）
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+	//　SpringBoot Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Mybatis
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+
+	// H2(InMemory DB)
+	testImplementation 'com.h2database:h2:2.2.224'
+
 }
 
 tasks.named('test') {
