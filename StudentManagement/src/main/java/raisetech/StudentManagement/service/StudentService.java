@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
+import raisetech.StudentManagement.data.CourseApplicationStatus;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
@@ -97,6 +98,10 @@ public class StudentService {
     for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
       repository.updateStudentCourse(studentCourse);
     }
+  }
+
+  public List<CourseApplicationStatus> searchCourseApplicationStatus(){
+    return repository.searchCourseApplicationStatus();
   }
 
   /**

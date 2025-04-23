@@ -67,4 +67,10 @@
     UPDATE students_courses SET course_name = #{courseName} WHERE id = #{id}
   </update>
 
+  <!-- 申込状況の全件検索　-->
+  <select id="searchCourseApplicationStatus" resultType="raisetech.StudentManagement.data.CourseApplicationStatus">
+    SELECT *
+    FROM course_application_status
+  </select>
+
 </mapper>

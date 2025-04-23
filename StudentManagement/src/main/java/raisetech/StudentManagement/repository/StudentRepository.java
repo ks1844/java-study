@@ -2,6 +2,7 @@ package raisetech.StudentManagement.repository;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import raisetech.StudentManagement.data.CourseApplicationStatus;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 
@@ -76,6 +77,13 @@ public interface StudentRepository {
    * @param studentCourse 受講生コース情報
    */
   void updateStudentCourse(StudentCourse studentCourse);
+
+  /**
+   * 申込状況を全件検索
+   *
+   * @return 申込状況
+   */
+  List<CourseApplicationStatus> searchCourseApplicationStatus();
 
   // TODO: MySQLのUUID()で自動生成されたidを取得してstudentのidフィールドにならないため保留
   //@Insert("INSERT INTO students (id, name, kana_name, nickname, email, area, age, sex, remark, is_deleted) " +

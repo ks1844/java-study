@@ -8,18 +8,16 @@ import jakarta.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import raisetech.StudentManagement.data.CourseApplicationStatus;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.exception.TestException;
 import raisetech.StudentManagement.service.StudentService;
@@ -125,6 +123,11 @@ public class StudentController {
     // 受講生情報TBLを更新
     service.updateStudent(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
+  }
+
+  @GetMapping("/courseApplicationStatusList")
+  public List<CourseApplicationStatus> getCourseApplicationStatusList(){
+    return service.searchCourseApplicationStatus();
   }
 
   /**
