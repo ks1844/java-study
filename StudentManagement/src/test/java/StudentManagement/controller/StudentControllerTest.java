@@ -1,4 +1,4 @@
-package raisetech.StudentManagement.controller;
+package StudentManagement.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -21,8 +21,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.service.StudentService;
+import StudentManagement.data.Student;
+import StudentManagement.service.StudentService;
 
 @WebMvcTest(StudentController.class)
 @TestMethodOrder(DisplayName.class)

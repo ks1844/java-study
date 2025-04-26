@@ -1,10 +1,10 @@
-package raisetech.StudentManagement.repository;
+package StudentManagement.repository;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
-import raisetech.StudentManagement.data.CourseApplicationStatus;
-import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentCourse;
+import StudentManagement.data.CourseApplicationStatus;
+import StudentManagement.data.Student;
+import StudentManagement.data.StudentCourse;
 
 /**
  * 受講生情報テーブルと受講生コース情報テーブルに紐づくRepository

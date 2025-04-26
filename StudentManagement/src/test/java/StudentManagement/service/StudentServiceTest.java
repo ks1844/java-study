@@ -1,4 +1,4 @@
-package raisetech.StudentManagement.service;
+package StudentManagement.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,11 +10,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import raisetech.StudentManagement.controller.converter.StudentConverter;
-import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentCourse;
-import raisetech.StudentManagement.domain.StudentDetail;
-import raisetech.StudentManagement.repository.StudentRepository;
+import StudentManagement.controller.converter.StudentConverter;
+import StudentManagement.data.Student;
+import StudentManagement.data.StudentCourse;
+import StudentManagement.domain.StudentDetail;
+import StudentManagement.repository.StudentRepository;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {

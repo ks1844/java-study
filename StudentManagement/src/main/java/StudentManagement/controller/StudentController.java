@@ -1,4 +1,4 @@
-package raisetech.StudentManagement.controller;
+package StudentManagement.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import raisetech.StudentManagement.data.CourseApplicationStatus;
-import raisetech.StudentManagement.domain.StudentDetail;
-import raisetech.StudentManagement.exception.TestException;
-import raisetech.StudentManagement.service.StudentService;
-import raisetech.StudentManagement.data.StudentCourse;
+import StudentManagement.data.CourseApplicationStatus;
+import StudentManagement.domain.StudentDetail;
+import StudentManagement.exception.TestException;
+import StudentManagement.service.StudentService;
+import StudentManagement.data.StudentCourse;
 
 /**
  * 受講生の検索や登録、更新などを行うREST　APIとして実行されるControllerです。

@@ -1,4 +1,4 @@
-package raisetech.StudentManagement.repository;
+package StudentManagement.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentCourse;
+import StudentManagement.data.Student;
+import StudentManagement.data.StudentCourse;
 
 @MybatisTest
 @TestMethodOrder(DisplayName.class)

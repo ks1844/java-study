@@ -1,4 +1,4 @@
-package raisetech.StudentManagement.controller.converter;
+package StudentManagement.controller.converter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,9 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentCourse;
-import raisetech.StudentManagement.domain.StudentDetail;
+import StudentManagement.data.Student;
+import StudentManagement.data.StudentCourse;
+import StudentManagement.domain.StudentDetail;
 
 @TestMethodOrder(DisplayName.class)
 class StudentConverterTest {

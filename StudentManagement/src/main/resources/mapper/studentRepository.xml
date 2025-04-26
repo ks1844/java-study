@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="raisetech.StudentManagement.repository.StudentRepository">
+<mapper namespace="StudentManagement.repository.StudentRepository">
 
   <!-- 受講生の全件検索 -->
-  <select id="search" resultType="raisetech.StudentManagement.data.Student">
+  <select id="search" resultType="StudentManagement.data.Student">
     SELECT *
     FROM students
   </select>
 
   <!-- 受講生の検索 -->
-  <select id="searchStudent" resultType="raisetech.StudentManagement.data.Student">
+  <select id="searchStudent" resultType="StudentManagement.data.Student">
     SELECT *
     FROM students
     WHERE id = #{id}
   </select>
 
   <!-- 受講生コース情報の全件検索　-->
-  <select id="searchStudentCourseList" resultType="raisetech.StudentManagement.data.StudentCourse">
+  <select id="searchStudentCourseList" resultType="StudentManagement.data.StudentCourse">
     SELECT *
     FROM students_courses
   </select>
 
   <!-- 受講生IDに紐づく受講生コース情報の検索　-->
-  <select id="searchStudentCourseListByStudentId" resultType="raisetech.StudentManagement.data.StudentCourse">
+  <select id="searchStudentCourseListByStudentId" resultType="StudentManagement.data.StudentCourse">
     SELECT *
     FROM students_courses
     WHERE student_id = #{studentId}
   </select>
 
   <!-- 受講生コース情報IDに紐づく受講生コース情報の検索　-->
-  <select id="searchStudentCourse" resultType="raisetech.StudentManagement.data.StudentCourse">
+  <select id="searchStudentCourse" resultType="StudentManagement.data.StudentCourse">
     SELECT *
     FROM students_courses
     WHERE id = #{id}
@@ -68,7 +68,7 @@
   </update>
 
   <!-- 申込状況の全件検索　-->
-  <select id="searchCourseApplicationStatus" resultType="raisetech.StudentManagement.data.CourseApplicationStatus">
+  <select id="searchCourseApplicationStatus" resultType="StudentManagement.data.CourseApplicationStatus">
     SELECT *
     FROM course_application_status
   </select>

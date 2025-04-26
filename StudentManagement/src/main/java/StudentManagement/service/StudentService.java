@@ -1,18 +1,17 @@
-package raisetech.StudentManagement.service;
+package StudentManagement.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import raisetech.StudentManagement.controller.converter.StudentConverter;
-import raisetech.StudentManagement.data.CourseApplicationStatus;
-import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentCourse;
-import raisetech.StudentManagement.domain.StudentDetail;
-import raisetech.StudentManagement.repository.StudentRepository;
+import StudentManagement.controller.converter.StudentConverter;
+import StudentManagement.data.CourseApplicationStatus;
+import StudentManagement.data.Student;
+import StudentManagement.data.StudentCourse;
+import StudentManagement.domain.StudentDetail;
+import StudentManagement.repository.StudentRepository;
 
 /**
  * 受講生情報を取り扱うサービス
