@@ -105,21 +105,11 @@ public class StudentService {
   }
 
   /**
-  * DBで重複しないUUIDを生成する。
+  * UUIDを生成する。
   * TODO:　repositoryでのOptionsアノテーションでidがStudentクラスにセットされないため、JavaでUUID管理するために一時的に作成した。
    */
   private String  generateUUID() {
-    String uuid;
-    while (true) {
-      uuid = String.valueOf(UUID.randomUUID());
-      StudentDetail studentDetail = searchStudent(uuid);
-      int studentIddDuplicateCount = Objects.isNull(studentDetail.getStudent()) ? 0:1;
-      int studentsCoursesIdDuplicateCount = Objects.isNull(repository.searchStudentCourse(uuid)) ? 0:1;
-      int uuidDuplicateCount = studentIddDuplicateCount + studentsCoursesIdDuplicateCount;
-      if (uuidDuplicateCount == 0) {
-        return uuid;
-      }
-    }
+    return String.valueOf(UUID.randomUUID());
   }
 
   /**
