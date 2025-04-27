@@ -1,5 +1,7 @@
 package StudentManagement.controller.converter;
 
+import StudentManagement.data.CourseApplicationStatus;
+import StudentManagement.domain.StudentCourseDetail;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,4 +38,19 @@ public class StudentConverter {
     return studentDetails;
   }
 
+  public List<StudentCourseDetail> convertStudentCourseDetail(List<StudentCourse> studentCourseList,
+      List<CourseApplicationStatus> courseApplicationStatusList) {
+    List<StudentCourseDetail> studentCourseDetailsList = new ArrayList<>();
+    for (StudentCourse studentCourse : studentCourseList) {
+      StudentCourseDetail studentCourseDetail = new StudentCourseDetail();
+      for (CourseApplicationStatus courseApplicationStatus : courseApplicationStatusList) {
+        if (studentCourse.getId().equals(courseApplicationStatus.getStudentCourseId())) {
+          studentCourseDetail.setStudentCourse(studentCourse);
+          studentCourseDetail.setCourseApplicationStatus(courseApplicationStatus);
+        }
+      }
+      studentCourseDetailsList.add(studentCourseDetail);
+    }
+    return studentCourseDetailsList;
+  }
 }

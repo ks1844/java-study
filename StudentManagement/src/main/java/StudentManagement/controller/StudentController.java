@@ -1,5 +1,6 @@
 package StudentManagement.controller;
 
+import StudentManagement.domain.StudentCourseDetail;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -125,9 +126,14 @@ public class StudentController {
     return ResponseEntity.ok("更新処理が成功しました。");
   }
 
-  @GetMapping("/courseApplicationStatusList")
-  public List<CourseApplicationStatus> getCourseApplicationStatusList(){
-    return service.searchCourseApplicationStatus();
+  /**
+   * 受講生コース詳細情報の一覧検索
+   *
+   * @return 受講生コース詳細情報（全件）
+   */
+  @GetMapping("/studentCourseList")
+  public List<StudentCourseDetail> getStudentCourseDetailList(){
+    return service.searchStudentCourseDetail();
   }
 
   /**

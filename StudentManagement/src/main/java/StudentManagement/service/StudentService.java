@@ -1,5 +1,6 @@
 package StudentManagement.service;
 
+import StudentManagement.domain.StudentCourseDetail;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -99,8 +100,15 @@ public class StudentService {
     }
   }
 
-  public List<CourseApplicationStatus> searchCourseApplicationStatus(){
-    return repository.searchCourseApplicationStatus();
+  /**
+   * 受講生コース詳細情報の一覧検索
+   *
+   * @return 受講生コース詳細情報（全件）
+   */
+  public List<StudentCourseDetail> searchStudentCourseDetail(){
+    List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
+    List<CourseApplicationStatus> courseApplicationStatuseList = repository.searchCourseApplicationStatus();
+    return converter.convertStudentCourseDetail(studentCourseList,courseApplicationStatuseList);
   }
 
   /**
