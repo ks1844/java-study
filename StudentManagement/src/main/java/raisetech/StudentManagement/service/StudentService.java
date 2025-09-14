@@ -1,16 +1,17 @@
 package raisetech.StudentManagement.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.CourseApplicationStatus;
+import raisetech.StudentManagement.data.CourseMaster;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
+import raisetech.StudentManagement.domain.StudentCourseDetail;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
 
@@ -32,26 +33,43 @@ public class StudentService {
    * 受講生詳細一覧検索
    * 全件検索を行うので、条件指定は行いません。
    *
-   * @return 受講生詳細一覧（全件）
+   * @return 受講生詳細の一覧（全件）
    */
-  public List<StudentDetail> searchStudentList(){
-    List<Student> studentList = repository.search();
+  public List<StudentDetail> searchStudentDetailList(){
+    List<Student> studentList = repository.searchStudent();
+    List<StudentCourseDetail> studentCourseDetailList = searchStudentCourseDetailList();
+    return converter.convertStudentDetailList(studentList,studentCourseDetailList);
+  }
+
+  public List<StudentCourseDetail> searchStudentCourseDetailList(){
     List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
-    return converter.convertStudentDetails(studentList,studentCourseList);
+    List<CourseApplicationStatus> courseApplicationStatusList = repository.searchCourseApplicationStatusList();
+    List<CourseMaster> courseMasterList = repository.searchCourseMasterList();
+    return converter.convertStudentCourseDetailList(studentCourseList,courseApplicationStatusList,courseMasterList);
   }
 
   /**　
-   * 受講生詳細検索
+   * 受講生詳細の検索
    * IDに紐づく受講生情報を取得した後、その受講生に紐づく受講生コース情報を取得して設定します。
    *
-   * @param id 受講生ID
+   * @param studentId 受講生ID
    * @return 受講生詳細情報
    */
-  public StudentDetail searchStudent(String id) {
-    Student student = repository.searchStudent(id);
-    List<StudentCourse>  studentCourseList = repository.searchStudentCourseListByStudentId(id);
-    return new StudentDetail(student,studentCourseList);
+  public StudentDetail searchStudentDetail(String studentId) {
+    Student student = repository.searchStudentById(studentId);
+    List<StudentCourse> studentCourseList = repository.searchStudentCourseListByStudentId(studentId);
+    List<StudentCourseDetail> studentCourseDetailList = new ArrayList<>();
+    for(StudentCourse studentCourse:studentCourseList){
+      String studentCourseId = studentCourse.getId();
+      CourseApplicationStatus courseApplicationStatus = repository.searchCourseApplicationStatusByStudentCourseId(studentCourseId);
+      String courseMasterId = studentCourse.getCourseMasterId();
+      CourseMaster courseMaster = repository.searchCourseMasterById(courseMasterId);
+      StudentCourseDetail studentCourseDetail = new StudentCourseDetail(studentCourse,courseApplicationStatus,courseMaster);
+      studentCourseDetailList.add(studentCourseDetail);
+    }
+    return new StudentDetail(student,studentCourseDetailList);
   }
+
 
   /**
    * 受講生詳細の登録
@@ -60,28 +78,28 @@ public class StudentService {
    * @param studentDetail 受講生詳細
    * @return 登録情報を付与した受講生詳細
    */
-  @Transactional
-  public StudentDetail registerStudent(StudentDetail studentDetail) {
-    // 受講生情報のuuidを生成し、受講生情報にセット
-    String studentId = generateUUID();
-    Student student = studentDetail.getStudent();
-    student.setId(studentId);
-
-    // 受講生情報を登録
-    repository.registerStudent(student);
-
-    // 受講生コース情報のUUIDを生成
-    String studentCourseId = generateUUID();
-
-    // 受講生コース情報を登録
-    // 受講生コース情報のフィールドをセット
-    studentDetail.getStudentCourseList().forEach(studentsCourse -> {
-      initStudentsCourse(studentsCourse, studentCourseId, studentId);
-      repository.registerStudentCourse(studentsCourse);
-    });
-
-    return studentDetail;
-  }
+  //@Transactional
+  //public StudentDetail registerStudent(StudentDetail studentDetail) {
+  //  // 受講生情報のuuidを生成し、受講生情報にセット
+  //  String studentId = generateUUID();
+  //  Student student = studentDetail.getStudent();
+  //  student.setId(studentId);
+  //
+  //  // 受講生情報を登録
+  //  repository.registerStudent(student);
+  //
+  //  // 受講生コース情報のUUIDを生成
+  //  String studentCourseId = generateUUID();
+  //
+  //  // 受講生コース情報を登録
+  //  // 受講生コース情報のフィールドをセット
+  //  studentDetail.getStudentCourseList().forEach(studentsCourse -> {
+  //    initStudentsCourse(studentsCourse, studentCourseId, studentId);
+  //    repository.registerStudentCourse(studentsCourse);
+  //  });
+  //
+  //  return studentDetail;
+  //}
 
   /**
    * 受講生詳細の更新
@@ -89,20 +107,20 @@ public class StudentService {
    *
    * @param studentDetail 受講生詳細
    */
-  @Transactional
-  public void updateStudent(StudentDetail studentDetail) {
-    // 受講生情報を更新
-    repository.updateStudent(studentDetail.getStudent());
-
-    // 受講生コース情報を更新
-    for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
-      repository.updateStudentCourse(studentCourse);
-    }
-  }
-
-  public List<CourseApplicationStatus> searchCourseApplicationStatus(){
-    return repository.searchCourseApplicationStatus();
-  }
+  //@Transactional
+  //public void updateStudent(StudentDetail studentDetail) {
+  //  // 受講生情報を更新
+  //  repository.updateStudent(studentDetail.getStudent());
+  //
+  //  // 受講生コース情報を更新
+  //  for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
+  //    repository.updateStudentCourse(studentCourse);
+  //  }
+  //}
+  //
+  //public List<CourseApplicationStatus> searchCourseApplicationStatus(){
+  //  return repository.searchCourseApplicationStatus();
+  //}
 
   /**
   * UUIDを生成する。

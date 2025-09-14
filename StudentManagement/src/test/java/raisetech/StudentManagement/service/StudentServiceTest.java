@@ -41,7 +41,7 @@ class StudentServiceTest {
     List<Student> studentList = new ArrayList<>();
     List<StudentCourse> studentCourseList = new ArrayList<>();
     // 戻り値を指定
-    Mockito.when(repository.search()).thenReturn(studentList);
+    Mockito.when(repository.searchStudent()).thenReturn(studentList);
     Mockito.when(repository.searchStudentCourseList()).thenReturn(studentCourseList);
 
     // 2.実行
@@ -52,10 +52,10 @@ class StudentServiceTest {
     // 4.検証
     Assertions.assertEquals(expected, actual);
     // 呼び出された回数の検証
-    Mockito.verify(repository, Mockito.times(1)).search();
+    Mockito.verify(repository, Mockito.times(1)).searchStudent();
     Mockito.verify(repository, Mockito.times(1)).searchStudentCourseList();
     Mockito.verify(converter, Mockito.times(1))
-        .convertStudentDetails(studentList, studentCourseList);
+        .convertStudentDetailList(studentList, studentCourseList);
   }
 
   @Test
@@ -67,14 +67,14 @@ class StudentServiceTest {
     student.setId(id);
 
     // 戻り値を指定
-    Mockito.when(repository.searchStudent(id)).thenReturn(student);
+    Mockito.when(repository.searchStudentById(id)).thenReturn(student);
     Mockito.when(repository.searchStudentCourseListByStudentId(id)).thenReturn(new ArrayList<>());
 
     StudentDetail expected = new StudentDetail(student,new ArrayList<>());
     StudentDetail actual = sut.searchStudent(id);
 
     // 呼び出された回数の検証
-    Mockito.verify(repository, Mockito.times(1)).searchStudent(id);
+    Mockito.verify(repository, Mockito.times(1)).searchStudentById(id);
     Mockito.verify(repository, Mockito.times(1)).searchStudentCourseListByStudentId(id);
 
     // 中身の内容の一致を確認

@@ -1,6 +1,7 @@
 package raisetech.StudentManagement.data;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor.AnyAnnotation;
@@ -10,12 +11,14 @@ import lombok.Setter;
 @Setter
 public class StudentCourse {
 
+  @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "数字のみ入力するようにしてください。")
   private String id;
 
+  @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "数字のみ入力するようにしてください。")
   private String studentId;
 
-  @NotBlank
-  private String courseName;
+  @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "数字のみ入力するようにしてください。")
+  private String courseMasterId;
 
   // TODO: 日時の形式にマッチする正規表現をValidationとして@Patternを付与する
   private LocalDateTime courseStartAt;

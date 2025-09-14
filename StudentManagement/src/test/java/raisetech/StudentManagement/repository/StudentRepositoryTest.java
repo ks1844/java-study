@@ -21,14 +21,14 @@ class StudentRepositoryTest {
 
   @Test
   void 受講生の全件検索が行えること() {
-    List<Student> actual = sut.search();
+    List<Student> actual = sut.searchStudent();
     assertThat(actual.size()).isEqualTo(5);
   }
 
   @Test
   void 受講生の検索が行えること() {
     String id = "aaaaaaaa-0000-0000-0000-000000000105";
-    Student actual = sut.searchStudent(id);
+    Student actual = sut.searchStudentById(id);
 
     assertThat(actual.getId()).isEqualTo("aaaaaaaa-0000-0000-0000-000000000105");
     assertThat(actual.getName()).isEqualTo("test name");
@@ -82,10 +82,10 @@ class StudentRepositoryTest {
 
     sut.registerStudent(student);
 
-    List<Student> actualStudentList = sut.search();
+    List<Student> actualStudentList = sut.searchStudent();
     assertThat(actualStudentList.size()).isEqualTo(6);
 
-    Student actualStudent = sut.searchStudent(id);
+    Student actualStudent = sut.searchStudentById(id);
     assertThat(actualStudent.getId()).isEqualTo(id);
     assertThat(actualStudent.getName()).isEqualTo("test name");
     assertThat(actualStudent.getKanaName()).isEqualTo("test kananame");
@@ -127,108 +127,108 @@ class StudentRepositoryTest {
   @Test
   void 受講生の名前の更新が行えること() {
     String id = "aaaaaaaa-0000-0000-0000-000000000105";
-    Student student = sut.searchStudent(id);
+    Student student = sut.searchStudentById(id);
     student.setName("更新テスト 名前");
 
     sut.updateStudent(student);
 
-    Student actual = sut.searchStudent(id);
+    Student actual = sut.searchStudentById(id);
     assertThat(actual.getName()).isEqualTo("更新テスト 名前");
   }
 
   @Test
   void 受講生のカナ名の更新が行えること() {
     String id = "aaaaaaaa-0000-0000-0000-000000000105";
-    Student student = sut.searchStudent(id);
+    Student student = sut.searchStudentById(id);
     student.setKanaName("こうしん かな");
 
     sut.updateStudent(student);
 
-    Student actual = sut.searchStudent(id);
+    Student actual = sut.searchStudentById(id);
     assertThat(actual.getKanaName()).isEqualTo("こうしん かな");
   }
 
   @Test
   void 受講生のニックネームの更新が行えること() {
     String id = "aaaaaaaa-0000-0000-0000-000000000105";
-    Student student = sut.searchStudent(id);
+    Student student = sut.searchStudentById(id);
     student.setNickname("こうしんくん");
 
     sut.updateStudent(student);
 
-    Student actual = sut.searchStudent(id);
+    Student actual = sut.searchStudentById(id);
     assertThat(actual.getNickname()).isEqualTo("こうしんくん");
   }
 
   @Test
   void 受講生のメールアドレスの更新が行えること() {
     String id = "aaaaaaaa-0000-0000-0000-000000000105";
-    Student student = sut.searchStudent(id);
+    Student student = sut.searchStudentById(id);
     student.setEmail("update_test@example.com");
 
     sut.updateStudent(student);
 
-    Student actual = sut.searchStudent(id);
+    Student actual = sut.searchStudentById(id);
     assertThat(actual.getEmail()).isEqualTo("update_test@example.com");
   }
 
   @Test
   void 受講生の地域の更新が行えること() {
     String id = "aaaaaaaa-0000-0000-0000-000000000105";
-    Student student = sut.searchStudent(id);
+    Student student = sut.searchStudentById(id);
     student.setArea("更新県");
 
     sut.updateStudent(student);
 
-    Student actual = sut.searchStudent(id);
+    Student actual = sut.searchStudentById(id);
     assertThat(actual.getArea()).isEqualTo("更新県");
   }
 
   @Test
   void 受講生の年齢の更新が行えること() {
     String id = "aaaaaaaa-0000-0000-0000-000000000105";
-    Student student = sut.searchStudent(id);
+    Student student = sut.searchStudentById(id);
     student.setAge(30);
 
     sut.updateStudent(student);
 
-    Student actual = sut.searchStudent(id);
+    Student actual = sut.searchStudentById(id);
     assertThat(actual.getAge()).isEqualTo(30);
   }
 
   @Test
   void 受講生の性別の更新が行えること() {
     String id = "aaaaaaaa-0000-0000-0000-000000000105";
-    Student student = sut.searchStudent(id);
+    Student student = sut.searchStudentById(id);
     student.setSex("その他");
 
     sut.updateStudent(student);
 
-    Student actual = sut.searchStudent(id);
+    Student actual = sut.searchStudentById(id);
     assertThat(actual.getSex()).isEqualTo("その他");
   }
 
   @Test
   void 受講生の備考の更新が行えること() {
     String id = "aaaaaaaa-0000-0000-0000-000000000105";
-    Student student = sut.searchStudent(id);
+    Student student = sut.searchStudentById(id);
     student.setRemark("備考を更新しました");
 
     sut.updateStudent(student);
 
-    Student actual = sut.searchStudent(id);
+    Student actual = sut.searchStudentById(id);
     assertThat(actual.getRemark()).isEqualTo("備考を更新しました");
   }
 
   @Test
   void 受講生の削除フラグの更新が行えること() {
     String id = "aaaaaaaa-0000-0000-0000-000000000105";
-    Student student = sut.searchStudent(id);
+    Student student = sut.searchStudentById(id);
     student.setDeleted(true);
 
     sut.updateStudent(student);
 
-    Student actual = sut.searchStudent(id);
+    Student actual = sut.searchStudentById(id);
     assertThat(actual.isDeleted()).isTrue();
   }
 

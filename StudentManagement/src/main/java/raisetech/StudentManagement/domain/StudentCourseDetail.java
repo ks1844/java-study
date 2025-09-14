@@ -1,24 +1,27 @@
 package raisetech.StudentManagement.domain;
 
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import raisetech.StudentManagement.data.Student;
+import raisetech.StudentManagement.data.CourseApplicationStatus;
+import raisetech.StudentManagement.data.CourseMaster;
 import raisetech.StudentManagement.data.StudentCourse;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentDetail {
+public class StudentCourseDetail {
 
   @Valid
-  private Student student;
+  private StudentCourse studentCourse;
 
   @Valid
-  private List<StudentCourseDetail> studentCourseDetailList;
+  private CourseApplicationStatus courseApplicationStatus;
+
+  @Valid
+  private CourseMaster courseMaster;
 
 }

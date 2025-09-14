@@ -48,16 +48,13 @@ public class StudentController {
   }
 
   /**
-   * 受講生詳細一覧検索
-   * 全件検索を行うので、条件指定は行わない。
+   * 受講生詳細の全件検索
    *
-   * @return 受講生詳細一覧（全件）
+   * @return　受講生詳細の一覧（全件）
    */
-  @GetMapping("/studentList")
-  public List<StudentDetail> getStudentList() throws TestException {
-    // @RestControllerに変換すると文字列を返すただの動きになり、
-    // ControllerとしてThymeleafと紐づける動きが失われ画面描画されなくなる
-    return service.searchStudentList();
+  @GetMapping("/studentDetailList")
+  public List<StudentDetail> getStudentDetailList(){
+    return service.searchStudentDetailList();
   }
 
   /**
@@ -69,24 +66,24 @@ public class StudentController {
    */
   // TODO: idにUUIDがマッチする正規表現で@Patternを付与する
   @Operation(summary = "受講生検索",description = "受講生を検索します。")
-  @GetMapping("/student/{id}")
+  @GetMapping("/studentDetail/{id}")
   public StudentDetail getStudent(@PathVariable @NotBlank @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})+$") String id){
-    return service.searchStudent(id);
+    return service.searchStudentDetail(id);
   }
 
   /**
    * 受講生の登録画面へ遷移
    */
-  @GetMapping("/newStudent")
-  public String newStudent(Model model) {
-    // 入力を受けるstudentDetailオブジェクトを作成
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudentCourseList(Arrays.asList(new StudentCourse()));
-
-    // studentDetailオブジェクトをmodelに渡す
-    model.addAttribute("studentDetail", studentDetail);
-    return "registerStudent";
-  }
+  //@GetMapping("/newStudent")
+  //public String newStudent(Model model) {
+  //  // 入力を受けるstudentDetailオブジェクトを作成
+  //  StudentDetail studentDetail = new StudentDetail();
+  //  studentDetail.setStudentCourseList(Arrays.asList(new StudentCourse()));
+  //
+  //  // studentDetailオブジェクトをmodelに渡す
+  //  model.addAttribute("studentDetail", studentDetail);
+  //  return "registerStudent";
+  //}
 
   /**
    * 受講生詳細の登録
@@ -94,22 +91,22 @@ public class StudentController {
    * @param studentDetail 受講生詳細
    * @return 実行結果
    */
-  @PostMapping("/registerStudent")
-  public ResponseEntity<StudentDetail> regiterStudent(@RequestBody @Valid StudentDetail studentDetail) {
-    // 新規受講生を登録する処理を実装する。
-    StudentDetail responceStudentDetail = service.registerStudent(studentDetail);
-    // コース情報も一緒に登録できるように実装する。コースは単体で良い。
-    return ResponseEntity.ok(responceStudentDetail);
-  }
+  //@PostMapping("/registerStudent")
+  //public ResponseEntity<StudentDetail> regiterStudent(@RequestBody @Valid StudentDetail studentDetail) {
+  //  // 新規受講生を登録する処理を実装する。
+  //  StudentDetail responceStudentDetail = service.registerStudent(studentDetail);
+  //  // コース情報も一緒に登録できるように実装する。コースは単体で良い。
+  //  return ResponseEntity.ok(responceStudentDetail);
+  //}
 
   /**
    * 受講生情報の変更画面へ遷移
    */
-  @GetMapping("/editStudent/{id}")
-  public String editStudent(@PathVariable("id") @Size(max=36) String id, Model model){
-    model.addAttribute("studentDetail", service.searchStudent(id));
-    return "editStudent";
-  }
+  //@GetMapping("/editStudent/{id}")
+  //public String editStudent(@PathVariable("id") @Size(max=36) String id, Model model){
+  //  model.addAttribute("studentDetail", service.searchStudent(id));
+  //  return "editStudent";
+  //}
 
   /**
    * 受講生の更新
@@ -118,17 +115,17 @@ public class StudentController {
    * @param studentDetail 受講生情報
    * @return 実行結果
    */
-  @PutMapping("/updateStudent")
-  public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail){
-    // 受講生情報TBLを更新
-    service.updateStudent(studentDetail);
-    return ResponseEntity.ok("更新処理が成功しました。");
-  }
+  //@PutMapping("/updateStudent")
+  //public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail){
+  //  // 受講生情報TBLを更新
+  //  service.updateStudent(studentDetail);
+  //  return ResponseEntity.ok("更新処理が成功しました。");
+  //}
 
-  @GetMapping("/courseApplicationStatusList")
-  public List<CourseApplicationStatus> getCourseApplicationStatusList(){
-    return service.searchCourseApplicationStatus();
-  }
+  //@GetMapping("/courseApplicationStatusList")
+  //public List<CourseApplicationStatus> getCourseApplicationStatusList(){
+  //  return service.searchCourseApplicationStatus();
+  //}
 
   /**
    * 例外を発生させるテスト用のメソッド

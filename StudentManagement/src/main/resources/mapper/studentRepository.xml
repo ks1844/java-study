@@ -3,68 +3,69 @@
 <mapper namespace="raisetech.StudentManagement.repository.StudentRepository">
 
   <!-- 受講生の全件検索 -->
-  <select id="search" resultType="raisetech.StudentManagement.data.Student">
+  <select id="searchStudent" resultType="raisetech.StudentManagement.data.Student">
     SELECT *
-    FROM students
+    FROM student
   </select>
 
   <!-- 受講生の検索 -->
-  <select id="searchStudent" resultType="raisetech.StudentManagement.data.Student">
+  <select id="searchStudentById" resultType="raisetech.StudentManagement.data.Student">
     SELECT *
-    FROM students
-    WHERE id = #{id}
-  </select>
-
-  <!-- 受講生コース情報の全件検索　-->
-  <select id="searchStudentCourseList" resultType="raisetech.StudentManagement.data.StudentCourse">
-    SELECT *
-    FROM students_courses
-  </select>
-
-  <!-- 受講生IDに紐づく受講生コース情報の検索　-->
-  <select id="searchStudentCourseListByStudentId" resultType="raisetech.StudentManagement.data.StudentCourse">
-    SELECT *
-    FROM students_courses
-    WHERE student_id = #{studentId}
-  </select>
-
-  <!-- 受講生コース情報IDに紐づく受講生コース情報の検索　-->
-  <select id="searchStudentCourse" resultType="raisetech.StudentManagement.data.StudentCourse">
-    SELECT *
-    FROM students_courses
+    FROM student
     WHERE id = #{id}
   </select>
 
   <!-- 受講生の登録 -->
   <insert id="registerStudent">
-    INSERT INTO students (
+    INSERT INTO student (
     id, name, kana_name, nickname, email, area, age, sex, remark, is_deleted
     ) VALUES (
     #{id}, #{name}, #{kanaName}, #{nickname}, #{email}, #{area}, #{age}, #{sex}, #{remark}, FALSE
     )
   </insert>
 
+  <!-- 受講生情報の更新 -->
+  <update id="updateStudent">
+    UPDATE student
+    SET
+    name= #{name}, kana_name = #{kanaName}, nickname = #{nickname},
+    email = #{email}, area = #{area}, age = #{age}, sex = #{sex}, remark = #{remark},
+    is_deleted = #{isDeleted} WHERE id = #{id}
+  </update>
+
+
+  <!-- 受講生コース情報の全件検索　-->
+  <select id="searchStudentCourseList" resultType="raisetech.StudentManagement.data.StudentCourse">
+    SELECT *
+    FROM student_course
+  </select>
+
+  <!-- 受講生コース情報の検索　-->
+  <select id="searchStudentCourse" resultType="raisetech.StudentManagement.data.StudentCourse">
+    SELECT *
+    FROM students_courses
+    WHERE id = #{id}
+  </select>
+
+  <!-- 受講生IDに紐づく受講生コース情報の検索　-->
+  <select id="searchStudentCourseListByStudentId" resultType="raisetech.StudentManagement.data.StudentCourse">
+    SELECT *
+    FROM student_course
+    WHERE student_id = #{studentId}
+  </select>
+
   <!-- 受講生コース情報の登録 -->
   <insert id="registerStudentCourse">
-    INSERT INTO students_courses (
+    INSERT INTO student_course (
     id, student_id, course_name, course_start_at, course_end_at
     ) VALUES (
     #{id}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt}
     )
   </insert>
 
-  <!-- 受講生情報の更新 -->
-  <update id="updateStudent">
-    UPDATE students
-    SET
-     name= #{name}, kana_name = #{kanaName}, nickname = #{nickname},
-    email = #{email}, area = #{area}, age = #{age}, sex = #{sex}, remark = #{remark},
-    is_deleted = #{isDeleted} WHERE id = #{id}
-  </update>
-
   <!-- 受講生コース情報の更新 -->
   <update id="updateStudentCourse">
-    UPDATE students_courses SET course_name = #{courseName} WHERE id = #{id}
+    UPDATE student_course SET course_name = #{courseName} WHERE id = #{id}
   </update>
 
   <!-- 申込状況の全件検索　-->
@@ -72,5 +73,33 @@
     SELECT *
     FROM course_application_status
   </select>
+
+  <!-- 申込状況の検索　-->
+  <select id="searchCourseApplicationStatusById" resultType="raisetech.StudentManagement.data.CourseApplicationStatus">
+    SELECT *
+    FROM course_application_status
+    WHERE id = #{id}
+  </select>
+
+  <!-- 受講生コースIDに紐づく申込状況の検索　-->
+  <select id="searchCourseApplicationStatusByStudentCourseId" resultType="raisetech.StudentManagement.data.CourseApplicationStatus">
+    SELECT *
+    FROM course_application_status
+    WHERE student_course_id = #{studentCourseId}
+  </select>
+
+  <!-- コースマスタの全件検索　-->
+  <select id="searchCourseMaster" resultType="raisetech.StudentManagement.data.CourseMaster">
+    SELECT *
+    FROM course_master
+  </select>
+
+  <!-- コースマスタの検索　-->
+  <select id="searchCourseMasterById" resultType="raisetech.StudentManagement.data.CourseMaster">
+    SELECT *
+    FROM course_master
+    WHERE id = #{id}
+  </select>
+
 
 </mapper>

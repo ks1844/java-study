@@ -48,7 +48,7 @@ class StudentConverterTest {
     List<StudentCourse> studentCourseList = List.of(studentCourse1,studentCourse2);
 
     // 実行
-    List<StudentDetail> actual = sut.convertStudentDetails(studentList,studentCourseList);
+    List<StudentDetail> actual = sut.convertStudentDetailList(studentList,studentCourseList);
 
     // 検証
     Assertions.assertEquals(1,actual.size());
@@ -77,7 +77,7 @@ class StudentConverterTest {
     List<StudentCourse> studentCourseList = List.of(studentCourse);
 
     //　実行
-    List<StudentDetail> actual = sut.convertStudentDetails(studentList,studentCourseList);
+    List<StudentDetail> actual = sut.convertStudentDetailList(studentList,studentCourseList);
 
     // 検証
     Assertions.assertEquals(1,actual.size());
