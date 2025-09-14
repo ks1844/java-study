@@ -88,6 +88,8 @@ public interface StudentRepository {
 
   CourseApplicationStatus searchCourseApplicationStatusByStudentCourseId(String studentCourseId);
 
+  void registerCourseApplicationStatus(CourseApplicationStatus courseApplicationStatus);
+
   /**
    * コースマスタの全件検索
    *

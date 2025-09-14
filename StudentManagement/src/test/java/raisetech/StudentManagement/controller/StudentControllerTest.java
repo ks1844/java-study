@@ -85,7 +85,7 @@ class StudentControllerTest {
                         }
                     """)).andExpect(status().isOk());
 
-    Mockito.verify(service, Mockito.times(1)).registerStudent(Mockito.any());
+    Mockito.verify(service, Mockito.times(1)).registerStudentDetail(Mockito.any());
   }
 
   @Test

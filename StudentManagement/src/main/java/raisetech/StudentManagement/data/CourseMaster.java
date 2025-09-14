@@ -17,6 +17,6 @@ public class CourseMaster {
   private String id;
 
   @Valid
-  private String courseName;
+  private String name;
 
 }

@@ -57,9 +57,9 @@
   <!-- 受講生コース情報の登録 -->
   <insert id="registerStudentCourse">
     INSERT INTO student_course (
-    id, student_id, course_name, course_start_at, course_end_at
+    id, student_id, course_master_id, course_start_at, course_end_at
     ) VALUES (
-    #{id}, #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt}
+    #{id}, #{studentId}, #{courseMasterId}, #{courseStartAt}, #{courseEndAt}
     )
   </insert>
 
@@ -69,7 +69,7 @@
   </update>
 
   <!-- 申込状況の全件検索　-->
-  <select id="searchCourseApplicationStatus" resultType="raisetech.StudentManagement.data.CourseApplicationStatus">
+  <select id="searchCourseApplicationStatusList" resultType="raisetech.StudentManagement.data.CourseApplicationStatus">
     SELECT *
     FROM course_application_status
   </select>
@@ -88,8 +88,17 @@
     WHERE student_course_id = #{studentCourseId}
   </select>
 
+  <!-- 申込状況の登録 -->
+  <insert id="registerCourseApplicationStatus">
+    INSERT INTO course_application_status (
+    id, student_course_id, status
+    ) VALUES (
+    #{id}, #{studentCourseId}, #{status}
+    )
+  </insert>
+
   <!-- コースマスタの全件検索　-->
-  <select id="searchCourseMaster" resultType="raisetech.StudentManagement.data.CourseMaster">
+  <select id="searchCourseMasterList" resultType="raisetech.StudentManagement.data.CourseMaster">
     SELECT *
     FROM course_master
   </select>

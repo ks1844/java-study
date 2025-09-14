@@ -88,7 +88,7 @@ class StudentServiceTest {
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     StudentDetail studentDetail = new StudentDetail(student,studentCourseList);
 
-    sut.registerStudent(studentDetail);
+    sut.registerStudentDetail(studentDetail);
 
     // 呼び出された回数の検証
     Mockito.verify(repository, Mockito.times(1)).registerStudent(student);
@@ -117,7 +117,7 @@ class StudentServiceTest {
     String studentCourseId = "999";
     StudentCourse studentCourse = new StudentCourse();
 
-    sut.initStudentsCourse(studentCourse,studentCourseId,studentId);
+    sut.initStudentCourse(studentCourse,studentCourseId,studentId);
 
     Assertions.assertEquals(studentId,studentCourse.getStudentId());
     Assertions.assertEquals(LocalDateTime.now().getHour(),studentCourse.getCourseStartAt().getHour());

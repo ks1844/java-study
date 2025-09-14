@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.CourseApplicationStatus;
 import raisetech.StudentManagement.data.CourseMaster;
@@ -78,28 +79,37 @@ public class StudentService {
    * @param studentDetail 受講生詳細
    * @return 登録情報を付与した受講生詳細
    */
-  //@Transactional
-  //public StudentDetail registerStudent(StudentDetail studentDetail) {
-  //  // 受講生情報のuuidを生成し、受講生情報にセット
-  //  String studentId = generateUUID();
-  //  Student student = studentDetail.getStudent();
-  //  student.setId(studentId);
-  //
-  //  // 受講生情報を登録
-  //  repository.registerStudent(student);
-  //
-  //  // 受講生コース情報のUUIDを生成
-  //  String studentCourseId = generateUUID();
-  //
-  //  // 受講生コース情報を登録
-  //  // 受講生コース情報のフィールドをセット
-  //  studentDetail.getStudentCourseList().forEach(studentsCourse -> {
-  //    initStudentsCourse(studentsCourse, studentCourseId, studentId);
-  //    repository.registerStudentCourse(studentsCourse);
-  //  });
-  //
-  //  return studentDetail;
-  //}
+  @Transactional
+  public StudentDetail registerStudentDetail(StudentDetail studentDetail) {
+    // 受講生情報を登録
+    String studentId = generateUUID();
+    Student student = studentDetail.getStudent();
+    student.setId(studentId);
+    repository.registerStudent(student);
+
+    studentDetail.getStudentCourseDetailList().forEach(studentCourseDetail -> {
+      // 受講生コース情報を登録
+      StudentCourse studentCourse = studentCourseDetail.getStudentCourse();
+      String studentCourseId = generateUUID();
+      initStudentCourse(studentCourse, studentCourseId, studentId);
+      repository.registerStudentCourse(studentCourse);
+
+      // 申込状況を登録
+      CourseApplicationStatus courseApplicationStatus = new CourseApplicationStatus();
+      String courseApplicationStatusId = generateUUID();
+      initCourseApplicationStatus(courseApplicationStatus,courseApplicationStatusId,studentCourseId);
+      studentCourseDetail.setCourseApplicationStatus(courseApplicationStatus);
+      repository.registerCourseApplicationStatus(courseApplicationStatus);
+
+      //  コースマスタをセット
+      String courseMasterId = studentCourse.getCourseMasterId();
+      CourseMaster courseMaster = repository.searchCourseMasterById(courseMasterId);
+      studentCourseDetail.setCourseMaster(courseMaster);
+
+    });
+
+    return studentDetail;
+  }
 
   /**
    * 受講生詳細の更新
@@ -133,18 +143,23 @@ public class StudentService {
   /**
    * 受講生コース情報を登録する際の初期情報を設定
    *
-   * @param studentsCourse 受講生コース情報
+   * @param studentCourse 受講生コース情報
    * @param studentCourseId 受講生コースID
    * @param studentId 受講生ID
    */
-  void initStudentsCourse(StudentCourse studentsCourse, String studentCourseId,
-      String studentId) {
+  void initStudentCourse(StudentCourse studentCourse, String studentCourseId, String studentId) {
     LocalDateTime now = LocalDateTime.now();
 
-    studentsCourse.setId(studentCourseId);
-    studentsCourse.setStudentId(studentId);
-    studentsCourse.setCourseStartAt(now);
-    studentsCourse.setCourseEndAt(now.plusYears(1));
+    studentCourse.setId(studentCourseId);
+    studentCourse.setStudentId(studentId);
+    studentCourse.setCourseStartAt(now);
+    studentCourse.setCourseEndAt(now.plusYears(1));
+  }
+
+  void initCourseApplicationStatus(CourseApplicationStatus courseApplicationStatus,String courseApplicationStatusId,String studentCourseId){
+    courseApplicationStatus.setId(courseApplicationStatusId);
+    courseApplicationStatus.setStudentCourseId(studentCourseId);
+    courseApplicationStatus.setStatus("仮申込");
   }
 
 }
