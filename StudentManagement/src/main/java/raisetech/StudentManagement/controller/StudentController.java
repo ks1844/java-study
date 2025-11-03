@@ -11,12 +11,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.domain.StudentCourseDetail;
 import raisetech.StudentManagement.domain.StudentDetail;
+import raisetech.StudentManagement.domain.StudentSearchCriteria;
 import raisetech.StudentManagement.exception.TestException;
 import raisetech.StudentManagement.service.StudentService;
 
@@ -39,8 +43,6 @@ public class StudentController {
    */
   @Autowired
   public StudentController(StudentService service) {
-    // @Autowiredでインスタンス化してくれる
-    // Springではこのようなコンストラクターインジェクションを推奨
     this.service = service;
   }
 
@@ -49,7 +51,7 @@ public class StudentController {
    *
    * @return　受講生詳細の一覧（全件）
    */
-  @GetMapping("/studentDetailList")
+  @GetMapping("/searchStudentDetailList")
   public List<StudentDetail> getStudentDetailList(){
     return service.searchStudentDetailList();
   }
@@ -63,9 +65,14 @@ public class StudentController {
    */
   // TODO: idにUUIDがマッチする正規表現で@Patternを付与する
   @Operation(summary = "受講生検索",description = "受講生を検索します。")
-  @GetMapping("/studentDetail/{id}")
-  public StudentDetail getStudent(@PathVariable @NotBlank @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})+$") String id){
+  @GetMapping("/searchStudentDetail/{id}")
+  public StudentDetail getStudentDetail(@PathVariable @NotBlank @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})+$") String id){
     return service.searchStudentDetail(id);
+  }
+
+  @GetMapping("/searchStudentDetailByCondition")
+  public List<Student> getStudentDetailByCondition(@ModelAttribute StudentSearchCriteria studentSearchCriteria){
+    return service.searchStudentByCondition(studentSearchCriteria);
   }
 
   /**
@@ -97,32 +104,18 @@ public class StudentController {
   }
 
   /**
-   * 受講生情報の変更画面へ遷移
-   */
-  //@GetMapping("/editStudent/{id}")
-  //public String editStudent(@PathVariable("id") @Size(max=36) String id, Model model){
-  //  model.addAttribute("studentDetail", service.searchStudent(id));
-  //  return "editStudent";
-  //}
-
-  /**
    * 受講生の更新
    * キャンセルフラグの更新もここで実施（論理削除）
    *
    * @param studentDetail 受講生情報
    * @return 実行結果
    */
-  //@PutMapping("/updateStudent")
-  //public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail){
-  //  // 受講生情報TBLを更新
-  //  service.updateStudent(studentDetail);
-  //  return ResponseEntity.ok("更新処理が成功しました。");
-  //}
-
-  //@GetMapping("/courseApplicationStatusList")
-  //public List<CourseApplicationStatus> getCourseApplicationStatusList(){
-  //  return service.searchCourseApplicationStatus();
-  //}
+  @PutMapping("/updateStudentDetail")
+  public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail){
+    // 受講生情報TBLを更新
+    service.updateStudentDetail(studentDetail);
+    return ResponseEntity.ok("更新処理が成功しました。");
+  }
 
   /**
    * 例外を発生させるテスト用のメソッド

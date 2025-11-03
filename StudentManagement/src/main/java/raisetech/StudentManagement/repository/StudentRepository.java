@@ -6,6 +6,7 @@ import raisetech.StudentManagement.data.CourseApplicationStatus;
 import raisetech.StudentManagement.data.CourseMaster;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
+import raisetech.StudentManagement.domain.StudentSearchCriteria;
 
 /**
  * 受講生情報テーブルと受講生コース情報テーブルに紐づくRepository
@@ -27,6 +28,8 @@ public interface StudentRepository {
    * @return 受講生
    */
   Student searchStudentById(String id);
+
+  List<Student> searchStudentByCondition(StudentSearchCriteria criteria);
 
   /**
    * 受講生の登録
@@ -89,6 +92,8 @@ public interface StudentRepository {
   CourseApplicationStatus searchCourseApplicationStatusByStudentCourseId(String studentCourseId);
 
   void registerCourseApplicationStatus(CourseApplicationStatus courseApplicationStatus);
+
+  void updateCourseApplicationStatus(CourseApplicationStatus courseApplicationStatus);
 
   /**
    * コースマスタの全件検索

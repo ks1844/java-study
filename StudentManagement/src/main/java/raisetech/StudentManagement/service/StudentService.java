@@ -14,6 +14,7 @@ import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentCourseDetail;
 import raisetech.StudentManagement.domain.StudentDetail;
+import raisetech.StudentManagement.domain.StudentSearchCriteria;
 import raisetech.StudentManagement.repository.StudentRepository;
 
 /**
@@ -71,6 +72,10 @@ public class StudentService {
     return new StudentDetail(student,studentCourseDetailList);
   }
 
+  public List<Student> searchStudentByCondition(StudentSearchCriteria studentSearchCriteria){
+    return repository.searchStudentByCondition(studentSearchCriteria);
+  }
+
 
   /**
    * 受講生詳細の登録
@@ -117,20 +122,17 @@ public class StudentService {
    *
    * @param studentDetail 受講生詳細
    */
-  //@Transactional
-  //public void updateStudent(StudentDetail studentDetail) {
-  //  // 受講生情報を更新
-  //  repository.updateStudent(studentDetail.getStudent());
-  //
-  //  // 受講生コース情報を更新
-  //  for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
-  //    repository.updateStudentCourse(studentCourse);
-  //  }
-  //}
-  //
-  //public List<CourseApplicationStatus> searchCourseApplicationStatus(){
-  //  return repository.searchCourseApplicationStatus();
-  //}
+  @Transactional
+  public void updateStudentDetail(StudentDetail studentDetail) {
+    // 受講生情報を更新
+    repository.updateStudent(studentDetail.getStudent());
+
+    // 受講生コース情報を更新
+    for (StudentCourseDetail studentCourseDetail : studentDetail.getStudentCourseDetailList()) {
+      repository.updateStudentCourse(studentCourseDetail.getStudentCourse());
+      repository.updateCourseApplicationStatus(studentCourseDetail.getCourseApplicationStatus());
+    }
+  }
 
   /**
   * UUIDを生成する。

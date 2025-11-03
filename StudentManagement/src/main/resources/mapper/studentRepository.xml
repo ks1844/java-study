@@ -15,6 +15,40 @@
     WHERE id = #{id}
   </select>
 
+  <!-- 受講生の複数条件での検索 -->
+  <select id="searchStudentByCondition" resultType="raisetech.StudentManagement.data.Student">
+    SELECT *
+    FROM student
+    WHERE 1 = 1
+    <if test="name != null and name != ''">
+      AND name LIKE CONCAT('%', #{name}, '%')
+    </if>
+    <if test="kanaName != null and kanaName != ''">
+      AND kana_name LIKE CONCAT('%', #{kanaName}, '%')
+    </if>
+    <if test="nickname != null and nickname != ''">
+      AND nickname LIKE CONCAT('%', #{nickname}, '%')
+    </if>
+    <if test="email != null and email != ''">
+      AND email LIKE CONCAT('%', #{email}, '%')
+    </if>
+    <if test="area != null and area != ''">
+      AND area LIKE CONCAT('%', #{area}, '%')
+    </if>
+    <if test="sex != null and sex != ''">
+      AND sex LIKE CONCAT('%', #{sex}, '%')
+    </if>
+    <if test="remark != null and remark != ''">
+      AND remark LIKE CONCAT('%', #{remark}, '%')
+    </if>
+    <if test="age != null">
+      AND age = #{age} <!-- 年齢は完全一致のまま -->
+    </if>
+    <if test="isDeleted != null">
+      AND is_deleted = #{isDeleted}
+    </if>
+  </select>
+
   <!-- 受講生の登録 -->
   <insert id="registerStudent">
     INSERT INTO student (
@@ -43,7 +77,7 @@
   <!-- 受講生コース情報の検索　-->
   <select id="searchStudentCourse" resultType="raisetech.StudentManagement.data.StudentCourse">
     SELECT *
-    FROM students_courses
+    FROM student_course
     WHERE id = #{id}
   </select>
 
@@ -65,7 +99,7 @@
 
   <!-- 受講生コース情報の更新 -->
   <update id="updateStudentCourse">
-    UPDATE student_course SET course_name = #{courseName} WHERE id = #{id}
+    UPDATE student_course SET course_master_id = #{courseMasterId} WHERE id = #{id}
   </update>
 
   <!-- 申込状況の全件検索　-->
@@ -80,6 +114,15 @@
     FROM course_application_status
     WHERE id = #{id}
   </select>
+
+  <update id="updateCourseApplicationStatus">
+    UPDATE course_application_status
+    SET
+    student_course_id = #{studentCourseId},
+    status = #{status}
+    WHERE id = #{id}
+  </update>
+
 
   <!-- 受講生コースIDに紐づく申込状況の検索　-->
   <select id="searchCourseApplicationStatusByStudentCourseId" resultType="raisetech.StudentManagement.data.CourseApplicationStatus">
