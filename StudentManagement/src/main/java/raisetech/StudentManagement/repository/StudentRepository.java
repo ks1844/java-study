@@ -17,7 +17,7 @@ public interface StudentRepository {
   /**
    * 受講生の全件検索
    *
-   * @return 受講生一覧（全件）
+   * @return 受講生のリスト（全件）
    */
   List<Student> searchStudent();
 
@@ -29,6 +29,12 @@ public interface StudentRepository {
    */
   Student searchStudentById(String id);
 
+  /**
+   * 受講生の複数条件での検索
+   *
+   * @param criteria 受講生の条件
+   * @return 受講生のリスト
+   */
   List<Student> searchStudentByCondition(StudentSearchCriteria criteria);
 
   /**

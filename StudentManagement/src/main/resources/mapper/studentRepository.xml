@@ -108,22 +108,6 @@
     FROM course_application_status
   </select>
 
-  <!-- 申込状況の検索　-->
-  <select id="searchCourseApplicationStatusById" resultType="raisetech.StudentManagement.data.CourseApplicationStatus">
-    SELECT *
-    FROM course_application_status
-    WHERE id = #{id}
-  </select>
-
-  <update id="updateCourseApplicationStatus">
-    UPDATE course_application_status
-    SET
-    student_course_id = #{studentCourseId},
-    status = #{status}
-    WHERE id = #{id}
-  </update>
-
-
   <!-- 受講生コースIDに紐づく申込状況の検索　-->
   <select id="searchCourseApplicationStatusByStudentCourseId" resultType="raisetech.StudentManagement.data.CourseApplicationStatus">
     SELECT *
@@ -139,6 +123,17 @@
     #{id}, #{studentCourseId}, #{status}
     )
   </insert>
+
+  <!-- 申込状況を更新する -->
+  <update id="updateCourseApplicationStatus">
+    UPDATE course_application_status
+    SET
+    student_course_id = #{studentCourseId},
+    status = #{status}
+    WHERE id = #{id}
+  </update>
+
+
 
   <!-- コースマスタの全件検索　-->
   <select id="searchCourseMasterList" resultType="raisetech.StudentManagement.data.CourseMaster">

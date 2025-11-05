@@ -30,9 +30,6 @@ import raisetech.StudentManagement.service.StudentService;
 @Validated
 @RestController
 public class StudentController {
-
-  // SpringBootで用意されているアノテーションが付いているものは自動でインスタンス生成される。
-  // StudentServiceも@Serviceアノテーションがついているのでnewでインスタンス生成しなくてよい。
   /** 受講生サービス */
   private StudentService service;
 
