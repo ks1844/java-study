@@ -9,7 +9,7 @@ import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentSearchCriteria;
 
 /**
- * 受講生情報テーブルと受講生コース情報テーブルに紐づくRepository
+ * 受講生情報テーブルと受講生コーステーブルに紐づくRepository
  */
 @Mapper
 public interface StudentRepository {
@@ -52,39 +52,39 @@ public interface StudentRepository {
   void updateStudent(Student student);
 
   /**
-   * 受講生コース情報の全件検索
+   * 受講生コースの全件検索
    *
-   * @return 受講生コース情報の一覧（全件）
+   * @return 受講生コースの一覧（全件）
    */
   List<StudentCourse> searchStudentCourseList();
 
   /**
-   * 受講生コース情報の検索
+   * 受講生コースの検索
    *
-   * @param id 受講生コース情報ID
-   * @return 受講生コース情報
+   * @param id 受講生コースID
+   * @return 受講生コース
    */
   StudentCourse searchStudentCourse(String id);
 
   /**
-   * 受講生IDに紐づく受講生コース情報の検索
+   * 受講生IDに紐づく受講生コースの検索
    *
    * @param studentId 受講生ID
-   * @return 受講生IDに紐づく受講生コース情報の一覧
+   * @return 受講生IDに紐づく受講生コースの一覧
    */
   List<StudentCourse> searchStudentCourseListByStudentId(String studentId);
 
   /**
-   * 受講生コース情報の登録
+   * 受講生コースの登録
    *
-   * @param studentCourse 受講生コース情報
+   * @param studentCourse 受講生コース
    */
   void registerStudentCourse(StudentCourse studentCourse);
 
   /**
-   * 受講生コース情報の更新
+   * 受講生コースの更新
    *
-   * @param studentCourse 受講生コース情報
+   * @param studentCourse 受講生コース
    */
   void updateStudentCourse(StudentCourse studentCourse);
 
@@ -95,10 +95,26 @@ public interface StudentRepository {
    */
   List<CourseApplicationStatus> searchCourseApplicationStatusList();
 
+  /**
+   * 受講生コースIDに紐づく申込状況の検索
+   *
+   * @param studentCourseId 受講生コースID
+   * @return 申込状況
+   */
   CourseApplicationStatus searchCourseApplicationStatusByStudentCourseId(String studentCourseId);
 
+  /**
+   * 申込状況の登録
+   *
+   * @param courseApplicationStatus 申込状況
+   */
   void registerCourseApplicationStatus(CourseApplicationStatus courseApplicationStatus);
 
+  /**
+   * 申込状況の更新
+   *
+   * @param courseApplicationStatus 申込状況
+   */
   void updateCourseApplicationStatus(CourseApplicationStatus courseApplicationStatus);
 
   /**
@@ -108,6 +124,12 @@ public interface StudentRepository {
    */
   List<CourseMaster> searchCourseMasterList();
 
+  /**
+   * コースマスタの検索
+   *
+   * @param id コースマスタID
+   * @return コースマスタ
+   */
   CourseMaster searchCourseMasterById(String id);
 
 

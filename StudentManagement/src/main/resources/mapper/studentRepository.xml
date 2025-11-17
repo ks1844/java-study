@@ -67,7 +67,6 @@
     is_deleted = #{isDeleted} WHERE id = #{id}
   </update>
 
-
   <!-- 受講生コース情報の全件検索　-->
   <select id="searchStudentCourseList" resultType="raisetech.StudentManagement.data.StudentCourse">
     SELECT *
@@ -133,8 +132,6 @@
     WHERE id = #{id}
   </update>
 
-
-
   <!-- コースマスタの全件検索　-->
   <select id="searchCourseMasterList" resultType="raisetech.StudentManagement.data.CourseMaster">
     SELECT *
@@ -147,6 +144,5 @@
     FROM course_master
     WHERE id = #{id}
   </select>
-
 
 </mapper>
