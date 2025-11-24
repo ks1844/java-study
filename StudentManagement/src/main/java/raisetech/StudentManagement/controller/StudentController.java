@@ -64,7 +64,7 @@ public class StudentController {
   @Operation(summary = "受講生検索",description = "受講生を検索します。")
   @GetMapping("/searchStudentDetail/{id}")
   public StudentDetail getStudentDetail(@PathVariable @NotBlank @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})+$") String id){
-    return service.searchStudentDetail(id);
+    return service.searchStudentDetailById(id);
   }
 
   @GetMapping("/searchStudentDetailByCondition")

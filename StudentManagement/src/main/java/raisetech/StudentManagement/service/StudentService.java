@@ -32,8 +32,7 @@ public class StudentService {
   }
 
   /**
-   * 受講生詳細一覧検索
-   * 全件検索を行うので、条件指定は行いません。
+   * 受講生詳細の一覧検索
    *
    * @return 受講生詳細の一覧（全件）
    */
@@ -43,7 +42,13 @@ public class StudentService {
     return converter.convertStudentDetailList(studentList,studentCourseDetailList);
   }
 
-  public List<StudentCourseDetail> searchStudentCourseDetailList(){
+  /**
+   * 受講生コース詳細の一覧検索
+   * 受講生コース情報、申込状況、コースマスタの全件検索を行い、受講生コース詳細のリストを生成する。
+   *
+   * @return 受講生コース詳細のリスト
+   */
+  private List<StudentCourseDetail> searchStudentCourseDetailList(){
     List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
     List<CourseApplicationStatus> courseApplicationStatusList = repository.searchCourseApplicationStatusList();
     List<CourseMaster> courseMasterList = repository.searchCourseMasterList();
@@ -52,12 +57,12 @@ public class StudentService {
 
   /**　
    * 受講生詳細の検索
-   * IDに紐づく受講生情報を取得した後、その受講生に紐づく受講生コース情報を取得して設定します。
+   * 受講生IDに紐づく受講生情報を取得し、その受講生に紐づく受講生コース情報を取得して設定する。
    *
    * @param studentId 受講生ID
    * @return 受講生詳細情報
    */
-  public StudentDetail searchStudentDetail(String studentId) {
+  public StudentDetail searchStudentDetailById(String studentId) {
     Student student = repository.searchStudentById(studentId);
     List<StudentCourse> studentCourseList = repository.searchStudentCourseListByStudentId(studentId);
     List<StudentCourseDetail> studentCourseDetailList = new ArrayList<>();
@@ -72,10 +77,14 @@ public class StudentService {
     return new StudentDetail(student,studentCourseDetailList);
   }
 
+  /**
+   * 受講生詳細の複数条件検索
+   *
+   * @return 受講生詳細のリスト
+   */
   public List<Student> searchStudentByCondition(StudentSearchCriteria studentSearchCriteria){
     return repository.searchStudentByCondition(studentSearchCriteria);
   }
-
 
   /**
    * 受講生詳細の登録
@@ -117,6 +126,35 @@ public class StudentService {
   }
 
   /**
+   * 受講生コースの初期化
+   *
+   * @param studentCourse 受講生コース情報
+   * @param studentCourseId 受講生コースID
+   * @param studentId 受講生ID
+   */
+  private void initStudentCourse(StudentCourse studentCourse, String studentCourseId, String studentId) {
+    LocalDateTime now = LocalDateTime.now();
+
+    studentCourse.setId(studentCourseId);
+    studentCourse.setStudentId(studentId);
+    studentCourse.setCourseStartAt(now);
+    studentCourse.setCourseEndAt(now.plusYears(1));
+  }
+
+  /**
+   * 申込状況を登録する際の初期情報を設定
+   *
+   * @param courseApplicationStatus 申込状況
+   * @param courseApplicationStatusId 申込状況ID
+   * @param studentCourseId 受講生コースID
+   */
+  private void initCourseApplicationStatus(CourseApplicationStatus courseApplicationStatus,String courseApplicationStatusId,String studentCourseId){
+    courseApplicationStatus.setId(courseApplicationStatusId);
+    courseApplicationStatus.setStudentCourseId(studentCourseId);
+    courseApplicationStatus.setStatus("仮申込");
+  }
+
+  /**
    * 受講生詳細の更新
    * 受講生と受講生コース情報をそれぞれ更新
    *
@@ -136,32 +174,11 @@ public class StudentService {
 
   /**
   * UUIDを生成する。
-  * TODO:　repositoryでのOptionsアノテーションでidがStudentクラスにセットされないため、JavaでUUID管理するために一時的に作成した。
    */
   private String  generateUUID() {
     return String.valueOf(UUID.randomUUID());
   }
 
-  /**
-   * 受講生コース情報を登録する際の初期情報を設定
-   *
-   * @param studentCourse 受講生コース情報
-   * @param studentCourseId 受講生コースID
-   * @param studentId 受講生ID
-   */
-  void initStudentCourse(StudentCourse studentCourse, String studentCourseId, String studentId) {
-    LocalDateTime now = LocalDateTime.now();
 
-    studentCourse.setId(studentCourseId);
-    studentCourse.setStudentId(studentId);
-    studentCourse.setCourseStartAt(now);
-    studentCourse.setCourseEndAt(now.plusYears(1));
-  }
-
-  void initCourseApplicationStatus(CourseApplicationStatus courseApplicationStatus,String courseApplicationStatusId,String studentCourseId){
-    courseApplicationStatus.setId(courseApplicationStatusId);
-    courseApplicationStatus.setStudentCourseId(studentCourseId);
-    courseApplicationStatus.setStatus("仮申込");
-  }
 
 }
