@@ -60,13 +60,18 @@ public class StudentController {
    * @param id 受講生ID
    * @return 受講生詳細
    */
-  // TODO: idにUUIDがマッチする正規表現で@Patternを付与する
   @Operation(summary = "受講生検索",description = "受講生を検索します。")
   @GetMapping("/searchStudentDetail/{id}")
   public StudentDetail getStudentDetail(@PathVariable @NotBlank @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})+$") String id){
     return service.searchStudentDetailById(id);
   }
 
+  /**
+   * 受講生の複数条件での検索
+   *
+   * @param studentSearchCriteria 受講生検索条件
+   * @return 受講生リスト
+   */
   @GetMapping("/searchStudentDetailByCondition")
   public List<Student> getStudentDetailByCondition(@ModelAttribute StudentSearchCriteria studentSearchCriteria){
     return service.searchStudentByCondition(studentSearchCriteria);
@@ -112,18 +117,6 @@ public class StudentController {
     // 受講生情報TBLを更新
     service.updateStudentDetail(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
-  }
-
-  /**
-   * 例外を発生させるテスト用のメソッド
-   *
-   * @param model
-   * @throws TestException
-   */
-  // TODo: Exception専用のクラスを作り、Controller以外で例外が発生してもキャッチできるようにする
-  @GetMapping("/exceptionTest")
-  public void throwTestException(Model model) throws TestException {
-    throw new TestException("現在このAPIは利用できません。古いURLとなっています。");
   }
 
 }

@@ -24,7 +24,6 @@ public class StudentCourse {
   @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "数字のみ入力するようにしてください。")
   private String courseMasterId;
 
-  // TODO: 日時の形式にマッチする正規表現をValidationとして@Patternを付与する
   private LocalDateTime courseStartAt;
   private LocalDateTime courseEndAt;
 }
