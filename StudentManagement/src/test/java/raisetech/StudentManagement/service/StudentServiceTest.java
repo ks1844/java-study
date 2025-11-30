@@ -131,9 +131,8 @@ class StudentServiceTest {
 
     // 呼び出された回数の検証
     Mockito.verify(repository, Mockito.times(1)).registerStudent(testData.student);
-    Mockito.verify(repository, Mockito.times(1)).registerStudentCourse(testData.studentCourse);
-    Mockito.verify(repository, Mockito.times(1)).registerCourseApplicationStatus(
-        testData.courseApplicationStatus);
+    Mockito.verify(repository, Mockito.times(1)).registerStudentCourse(testData.studentDetail().getStudentCourseDetailList().get(0).getStudentCourse());
+    Mockito.verify(repository, Mockito.times(1)).registerCourseApplicationStatus(testData.studentDetail.getStudentCourseDetailList().get(0).getCourseApplicationStatus());
     Mockito.verify(repository,Mockito.times(1)).searchCourseMasterById(testData.courseMasterId);
   }
 

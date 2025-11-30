@@ -119,11 +119,11 @@ class StudentConverterTest {
     //　実行
     List<StudentDetail> actual = sut.convertStudentDetailList(studentList,studentCourseDetailList);
 
-    // 検証
-    Assertions.assertEquals(1,actual.size());
-    Assertions.assertEquals(0,actual.getFirst().getStudentCourseDetailList().size());
-    Assertions.assertEquals(student,actual.getFirst().getStudent());
-    Assertions.assertEquals(new ArrayList<>(),actual.getFirst().getStudentCourseDetailList());
+// 検証
+    assertThat(actual).hasSize(1);
+    assertThat(actual).first().extracting(detail -> detail.getStudentCourseDetailList().size()).isEqualTo(0);
+    assertThat(actual).first().extracting(StudentDetail::getStudent).isEqualTo(student);
+    assertThat(actual).first().extracting(StudentDetail::getStudentCourseDetailList).isEqualTo(new ArrayList<>());
 
   }
 
@@ -153,11 +153,11 @@ class StudentConverterTest {
     // 実行
     List<StudentCourseDetail> actual = sut.convertStudentCourseDetailList(studentCourseList,courseApplicationStatusList,courseMasterList);
 
-    // 検証
-    Assertions.assertEquals(1,actual.size());
-    Assertions.assertEquals(studentCourse1,actual.getFirst().getStudentCourse());
-    Assertions.assertEquals(courseApplicationStatus,actual.getFirst().getCourseApplicationStatus());
-    Assertions.assertEquals(courseMaster,actual.getFirst().getCourseMaster());
+// 検証
+    assertThat(actual).hasSize(1);
+    assertThat(actual).first().extracting(StudentCourseDetail::getStudentCourse).isEqualTo(studentCourse1);
+    assertThat(actual).first().extracting(StudentCourseDetail::getCourseApplicationStatus).isEqualTo(courseApplicationStatus);
+    assertThat(actual).first().extracting(StudentCourseDetail::getCourseMaster).isEqualTo(courseMaster);
 
   }
 
