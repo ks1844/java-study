@@ -1,5 +1,7 @@
 package raisetech.StudentManagement.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +75,7 @@ class StudentServiceTest {
   @Test
   void 受講生詳細の検索_リポジトリの処理が適切に呼び出せていること(){
     TestData testData = getTestData();
-    StudentDetail expected = testData.studentDetail();
+    TestData expected = testData;
 
     // 戻り値を指定
     Mockito.when(repository.searchStudentById(testData.studentId())).thenReturn(testData.student());
@@ -95,16 +97,15 @@ class StudentServiceTest {
         testData.studentCourseId());
     Mockito.verify(repository, Mockito.times(1)).searchCourseMasterById(testData.courseMasterId());
 
-    // 内容の確認
-    Assertions.assertEquals(expected.getStudent().getId()
-        , actual.getStudent().getId());
-    Assertions.assertEquals(expected.getStudentCourseDetailList().getFirst().getStudentCourse().getId()
-        , actual.getStudentCourseDetailList().getFirst().getStudentCourse().getId());
-    Assertions.assertEquals(expected.getStudentCourseDetailList().getFirst().getCourseApplicationStatus().getStudentCourseId()
-        , actual.getStudentCourseDetailList().getFirst().getCourseApplicationStatus().getStudentCourseId());
-    Assertions.assertEquals(expected.getStudentCourseDetailList().getFirst().getCourseMaster().getId()
-        , actual.getStudentCourseDetailList().getFirst().getCourseMaster().getId());
-  }
+// 内容の確認
+    assertThat(actual.getStudent().getId()).isEqualTo(expected.studentId);
+    assertThat(actual.getStudentCourseDetailList()).first().extracting(detail -> detail.getStudentCourse().getId())
+        .isEqualTo(expected.studentCourseId);
+    assertThat(actual.getStudentCourseDetailList()).first().extracting(detail -> detail.getCourseApplicationStatus().getStudentCourseId())
+        .isEqualTo(expected.studentCourseId);
+    assertThat(actual.getStudentCourseDetailList()).first().extracting(detail -> detail.getCourseMaster().getId())
+        .isEqualTo(expected.courseMasterId);
+    }
 
   @Test
   void 受講生詳細の複数条件検索_リポジトリの処理が適切に呼び出せていること(){
@@ -132,7 +133,7 @@ class StudentServiceTest {
     Mockito.verify(repository, Mockito.times(1)).registerStudent(testData.student);
     Mockito.verify(repository, Mockito.times(1)).registerStudentCourse(testData.studentCourse);
     Mockito.verify(repository, Mockito.times(1)).registerCourseApplicationStatus(
-        testData.studentDetail.getStudentCourseDetailList().getFirst().getCourseApplicationStatus());
+        testData.courseApplicationStatus);
     Mockito.verify(repository,Mockito.times(1)).searchCourseMasterById(testData.courseMasterId);
   }
 
@@ -146,9 +147,9 @@ class StudentServiceTest {
 
     // 検証
     Assertions.assertEquals(LocalDateTime.now().getHour()
-        ,expected.getStudentCourseDetailList().getFirst().getStudentCourse().getCourseStartAt().getHour());
+        ,expected.getStudentCourseDetailList().get(0).getStudentCourse().getCourseStartAt().getHour());
     Assertions.assertEquals(LocalDateTime.now().plusYears(1).getYear()
-        ,expected.getStudentCourseDetailList().getFirst().getStudentCourse().getCourseEndAt().getYear());
+        ,expected.getStudentCourseDetailList().get(0).getStudentCourse().getCourseEndAt().getYear());
   }
 
   @Test
@@ -164,8 +165,9 @@ class StudentServiceTest {
     Mockito.verify(repository,Mockito.times(1)).registerStudentCourse(testData.studentCourse);
 
     // 検証
-    Assertions.assertEquals("仮申込"
-        ,expected.getStudentCourseDetailList().getFirst().getCourseApplicationStatus().getStatus());
+    assertThat(expected.getStudentCourseDetailList()).first()
+        .extracting(detail -> detail.getCourseApplicationStatus().getStatus())
+        .isEqualTo("仮申込");
   }
 
   @Test

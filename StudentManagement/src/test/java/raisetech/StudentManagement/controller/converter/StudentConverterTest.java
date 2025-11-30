@@ -1,5 +1,7 @@
 package raisetech.StudentManagement.controller.converter;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ class StudentConverterTest {
   }
 
   @Test
-  void 受講生IDが同じ受講生コース詳細を紐づけて受講生詳細が作成できること(){
+  void 受講生IDが同じ受講生コース詳細を紐づけて受講生詳細が作成できること() {
 
     // 受講生
     Student student = createStudent();
@@ -47,8 +49,14 @@ class StudentConverterTest {
     studentCourse2.setCourseEndAt(LocalDateTime.parse("2025-10-01T00:00:00.000000"));
 
     // 申込状況を2件作成
-    CourseApplicationStatus courseApplicationStatus1 = new CourseApplicationStatus("dddddddd-0000-0000-0000-000000000006","bbbbbbbb-0000-0000-0000-000000000006","仮申込");
-    CourseApplicationStatus courseApplicationStatus2 = new CourseApplicationStatus("dddddddd-0000-0000-0000-000000000007","bbbbbbbb-0000-0000-0000-000000000007","受講中");
+    CourseApplicationStatus courseApplicationStatus1 =
+        new CourseApplicationStatus("dddddddd-0000-0000-0000-000000000006",
+            "bbbbbbbb-0000-0000-0000-000000000006",
+            "仮申込");
+    CourseApplicationStatus courseApplicationStatus2 =
+        new CourseApplicationStatus("dddddddd-0000-0000-0000-000000000007",
+            "bbbbbbbb-0000-0000-0000-000000000007",
+            "受講中");
 
     // コースマスタを2件作成
     CourseMaster courseMaster1 = new CourseMaster("cccccccc-0000-0000-0000-000000000001","Java基礎");
@@ -66,17 +74,25 @@ class StudentConverterTest {
     List<StudentDetail> actual = sut.convertStudentDetailList(studentList,studentCourseDetailList);
 
     // 検証
-    Assertions.assertEquals(1,actual.size());
-    Assertions.assertEquals(2,actual.getFirst().getStudentCourseDetailList().size());
-    Assertions.assertEquals(student,actual.getFirst().getStudent());
-    Assertions.assertEquals(studentCourseDetailList,actual.getFirst().getStudentCourseDetailList());
-    Assertions.assertEquals(studentCourse1.getId(),actual.getFirst().getStudentCourseDetailList().getFirst().getStudentCourse().getId());
-    Assertions.assertEquals(studentCourse2.getId(),actual.getFirst().getStudentCourseDetailList().getLast().getStudentCourse().getId());
-    Assertions.assertEquals(courseApplicationStatus1.getId(),actual.getFirst().getStudentCourseDetailList().getFirst().getCourseApplicationStatus().getId());
-    Assertions.assertEquals(courseApplicationStatus2.getId(),actual.getFirst().getStudentCourseDetailList().getLast().getCourseApplicationStatus().getId());
-    Assertions.assertEquals(courseMaster1.getId(),actual.getFirst().getStudentCourseDetailList().getFirst().getCourseMaster().getId());
-    Assertions.assertEquals(courseMaster2.getId(),actual.getFirst().getStudentCourseDetailList().getLast().getCourseMaster().getId());
+    assertThat(actual).hasSize(1);
+    assertThat(actual).first().extracting(StudentDetail::getStudentCourseDetailList).asList().hasSize(2);
+    assertThat(actual).first().extracting(StudentDetail::getStudent).isEqualTo(student);
+    assertThat(actual).first().extracting(StudentDetail::getStudentCourseDetailList).isEqualTo(studentCourseDetailList);
 
+    assertThat(actual).first().extracting(detail -> detail.getStudentCourseDetailList().get(0).getStudentCourse().getId())
+        .isEqualTo(studentCourse1.getId());
+    assertThat(actual).first().extracting(detail -> detail.getStudentCourseDetailList().get(1).getStudentCourse().getId())
+        .isEqualTo(studentCourse2.getId());
+
+    assertThat(actual).first().extracting(detail -> detail.getStudentCourseDetailList().get(0).getCourseApplicationStatus().getId())
+        .isEqualTo(courseApplicationStatus1.getId());
+    assertThat(actual).first().extracting(detail -> detail.getStudentCourseDetailList().get(1).getCourseApplicationStatus().getId())
+        .isEqualTo(courseApplicationStatus2.getId());
+
+    assertThat(actual).first().extracting(detail -> detail.getStudentCourseDetailList().get(0).getCourseMaster().getId())
+        .isEqualTo(courseMaster1.getId());
+    assertThat(actual).first().extracting(detail -> detail.getStudentCourseDetailList().get(1).getCourseMaster().getId())
+        .isEqualTo(courseMaster2.getId());
   }
 
   @Test

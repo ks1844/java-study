@@ -1,0 +1,205 @@
+#　受講生詳細の一覧検索
+・URL: /searchStudentDetailList
+・METHOD: GET
+・レスポンス: JSON形式
+・レスポンス例：
+[
+    {
+        "student": {
+            "id": "aaaaaaaa-0000-0000-0000-000000000001",
+            "name": "山田 太郎",
+            "kanaName": "ヤマダ タロウ",
+            "nickname": "タロウタロウタ",
+            "email": "taro@example.com",
+            "area": "東京都",
+            "age": 28,
+            "sex": "男",
+            "remark": null,
+            "deleted": false
+        },
+        "studentCourseDetailList": [
+            {
+                "studentCourse": {
+                    "id": "bbbbbbbb-0000-0000-0000-000000000001",
+                    "studentId": "aaaaaaaa-0000-0000-0000-000000000001",
+                    "courseMasterId": "cccccccc-0000-0000-0000-000000000001",
+                    "courseStartAt": "2024-04-01T09:00:00",
+                    "courseEndAt": "2025-04-01T17:00:00"
+                },
+                "courseApplicationStatus": {
+                    "id": "dddddddd-0000-0000-0000-000000000001",
+                    "studentCourseId": "bbbbbbbb-0000-0000-0000-000000000001",
+                    "status": "受講中"
+                },
+                "courseMaster": {
+                    "id": "cccccccc-0000-0000-0000-000000000001",
+                    "name": "Javaコース"
+                }
+            }
+        ]
+    },
+    （以下、複数件続く）
+]
+
+＃ 受講生詳細の受講生ID検索
+・URL:　/searchStudentDetail/aaaaaaaa-0000-0000-0000-000000000001
+・METHOD: GET
+・レスポンス: JSON形式
+・レスポンス例：
+{
+    "student": {
+        "id": "aaaaaaaa-0000-0000-0000-000000000001",
+        "name": "山田 太郎",
+        "kanaName": "ヤマダ タロウ",
+        "nickname": "タロウタロウタ",
+        "email": "taro@example.com",
+        "area": "東京都",
+        "age": 28,
+        "sex": "男",
+        "remark": null,
+        "deleted": false
+    },
+    "studentCourseDetailList": [
+        {
+            "studentCourse": {
+                "id": "bbbbbbbb-0000-0000-0000-000000000001",
+                "studentId": "aaaaaaaa-0000-0000-0000-000000000001",
+                "courseMasterId": "cccccccc-0000-0000-0000-000000000001",
+                "courseStartAt": "2024-04-01T09:00:00",
+                "courseEndAt": "2025-04-01T17:00:00"
+            },
+            "courseApplicationStatus": {
+                "id": "dddddddd-0000-0000-0000-000000000001",
+                "studentCourseId": "bbbbbbbb-0000-0000-0000-000000000001",
+                "status": "受講中"
+            },
+            "courseMaster": {
+                "id": "cccccccc-0000-0000-0000-000000000001",
+                "name": "Javaコース"
+            }
+        }
+    ]
+}
+
+#　受講生の複数条件検索
+・URL: /searchStudentDetailByCondition?email=example&area=東京
+・METHOD: GET
+・レスポンス: JSON形式
+・レスポンス例：
+[
+    {
+        "id": "aaaaaaaa-0000-0000-0000-000000000001",
+        "name": "山田 太郎",
+        "kanaName": "ヤマダ タロウ",
+        "nickname": "タロウタロウタ",
+        "email": "taro@example.com",
+        "area": "東京都",
+        "age": 28,
+        "sex": "男",
+        "remark": null,
+        "deleted": false
+    },
+    {
+        "id": "aaaaaaaa-0000-0000-0000-000000000004",
+        "name": "田中 美穂",
+        "kanaName": "タナカ ミホ",
+        "nickname": "ミホ",
+        "email": "miho@example.com",
+        "area": "東京都",
+        "age": 29,
+        "sex": "女",
+        "remark": null,
+        "deleted": false
+    }
+]
+
+#　受講生詳細の登録
+・URL: /registerStudentDetail
+・METHOD: POST
+・リクエストボディ: JSON形式
+・リクエストボディ例：
+{
+    "student":{
+        "name":"加藤　夏",
+        "kanaName":"ナツ",
+        "nickname":"kato",
+        "email":"k-kato9785@gmail.com",
+        "area":"America",
+        "age":17,
+        "sex":"女",
+        "remark":""
+    },
+    "studentCourseDetailList":[
+        {
+            "studentCourse":{
+                "courseMasterId":"cccccccc-0000-0000-0000-000000000001"
+            }
+        },
+        {
+            "studentCourse":{
+                "courseMasterId":"cccccccc-0000-0000-0000-000000000002"
+            }
+        }
+    ]
+}
+
+・レスポンス: JSON形式
+
+#　受講生詳細の更新
+・URL: /registerStudentDetail
+・METHOD: POSt
+・リクエストボディ: JSON形式
+・リクエストボディ例：
+{
+  "student": {
+    "id": "aaaaaaaa-0000-0000-0000-000000000006",
+    "name": "二宮 二郎",
+    "kanaName": "ニノミヤ ジロウ",
+    "nickname": "ニロウ",
+    "email": "jiro@example.com",
+    "area": "神奈川県",
+    "age": 24,
+    "sex": "男",
+    "remark": null,
+    "isDeleted": false
+  },
+  "studentCourseDetailList": [
+    {
+      "studentCourse": {
+        "id": "bbbbbbbb-0000-0000-0000-000000000006",
+        "studentId": "aaaaaaaa-0000-0000-0000-000000000006",
+        "courseMasterId": "cccccccc-0000-0000-0000-000000000001",
+        "courseStartAt": "2024-09-01T09:00:00",
+        "courseEndAt": "2025-09-01T17:00:00"
+      },
+      "courseApplicationStatus": {
+        "id": "dddddddd-0000-0000-0000-000000000006",
+        "studentCourseId": "bbbbbbbb-0000-0000-0000-000000000006",
+        "status": "仮申込"
+      },
+      "courseMaster": {
+        "id": "cccccccc-0000-0000-0000-000000000001",
+        "name": "Javaコース"
+      }
+    },
+    {
+      "studentCourse": {
+        "id": "bbbbbbbb-0000-0000-0000-000000000007",
+        "studentId": "aaaaaaaa-0000-0000-0000-000000000006",
+        "courseMasterId": "cccccccc-0000-0000-0000-000000000003",
+        "courseStartAt": "2024-10-01T09:00:00",
+        "courseEndAt": "2025-10-01T17:00:00"
+      },
+      "courseApplicationStatus": {
+        "id": "dddddddd-0000-0000-0000-000000000007",
+        "studentCourseId": "bbbbbbbb-0000-0000-0000-000000000007",
+        "status": "受講中"
+      },
+      "courseMaster": {
+        "id": "cccccccc-0000-0000-0000-000000000003",
+        "name": "WordPressコース"
+      }
+    }
+  ]
+}
+・レスポンス: 更新処理が成功しました。

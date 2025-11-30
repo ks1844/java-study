@@ -58,7 +58,7 @@ public class StudentRepositoryTest {
     List<Student> actual = sut.searchStudentByCondition(studentSearchCriteria);
 
     assertThat(actual).hasSize(1);
-    assertThat(actual.getFirst().getName()).isEqualTo("小林 美香");
+    assertThat(actual).first().extracting(Student::getName).isEqualTo("小林 美香");
   }
 
   @Test
@@ -69,7 +69,7 @@ public class StudentRepositoryTest {
     List<Student> actual = sut.searchStudentByCondition(studentSearchCriteria);
 
     assertThat(actual).hasSize(1);
-    assertThat(actual.getFirst().getKanaName()).isEqualTo("コバヤシ ミカ");
+    assertThat(actual).first().extracting(Student::getKanaName).isEqualTo("コバヤシ ミカ");
   }
 
   @Test
@@ -80,7 +80,7 @@ public class StudentRepositoryTest {
     List<Student> actual = sut.searchStudentByCondition(studentSearchCriteria);
 
     assertThat(actual).hasSize(1);
-    assertThat(actual.getFirst().getNickname()).isEqualTo("ミカ");
+    assertThat(actual).first().extracting(Student::getNickname).isEqualTo("ミカ");
   }
 
   @Test
@@ -91,7 +91,7 @@ public class StudentRepositoryTest {
     List<Student> actual = sut.searchStudentByCondition(studentSearchCriteria);
 
     assertThat(actual).hasSize(1);
-    assertThat(actual.getFirst().getEmail()).isEqualTo("mika@example.com");
+    assertThat(actual).first().extracting(Student::getEmail).isEqualTo("mika@example.com");
   }
 
   @Test
@@ -102,7 +102,7 @@ public class StudentRepositoryTest {
     List<Student> actual = sut.searchStudentByCondition(studentSearchCriteria);
 
     assertThat(actual).hasSize(1);
-    assertThat(actual.getFirst().getArea()).isEqualTo("埼玉県");
+    assertThat(actual).first().extracting(Student::getArea).isEqualTo("埼玉県");
   }
 
   @Test
@@ -113,9 +113,8 @@ public class StudentRepositoryTest {
     List<Student> actual = sut.searchStudentByCondition(studentSearchCriteria);
 
     assertThat(actual).hasSize(1);
-    assertThat(actual.getFirst().getAge()).isEqualTo(27);
+    assertThat(actual).first().extracting(Student::getAge).isEqualTo(27);
   }
-
   @Test
   void 性別から受講生の検索ができること() {
     StudentSearchCriteria studentSearchCriteria = new StudentSearchCriteria();
@@ -135,7 +134,7 @@ public class StudentRepositoryTest {
     List<Student> actual = sut.searchStudentByCondition(studentSearchCriteria);
 
     assertThat(actual).hasSize(1);
-    assertThat(actual.getFirst().getRemark()).isEqualTo("プログラミング経験あり");
+    assertThat(actual).first().extracting(Student::getRemark).isEqualTo("プログラミング経験あり");
   }
 
   @Test
@@ -159,16 +158,16 @@ public class StudentRepositoryTest {
     List<Student> actual = sut.searchStudentByCondition(studentSearchCriteria);
 
     assertThat(actual).hasSize(1);
-    assertThat(actual.getFirst().getId()).isEqualTo("aaaaaaaa-0000-0000-0000-000000000007");
-    assertThat(actual.getFirst().getName()).isEqualTo("小林 美香");
-    assertThat(actual.getFirst().getKanaName()).isEqualTo("コバヤシ ミカ");
-    assertThat(actual.getFirst().getNickname()).isEqualTo("ミカ");
-    assertThat(actual.getFirst().getEmail()).isEqualTo("mika@example.com");
-    assertThat(actual.getFirst().getArea()).isEqualTo("埼玉県");
-    assertThat(actual.getFirst().getAge()).isEqualTo(27);
-    assertThat(actual.getFirst().getSex()).isEqualTo("女");
-    assertThat(actual.getFirst().getRemark()).isEqualTo("プログラミング経験あり");
-    assertThat(actual.getFirst().isDeleted()).isFalse();
+    assertThat(actual).first().extracting(Student::getId).isEqualTo("aaaaaaaa-0000-0000-0000-000000000007");
+    assertThat(actual).first().extracting(Student::getName).isEqualTo("小林 美香");
+    assertThat(actual).first().extracting(Student::getKanaName).isEqualTo("コバヤシ ミカ");
+    assertThat(actual).first().extracting(Student::getNickname).isEqualTo("ミカ");
+    assertThat(actual).first().extracting(Student::getEmail).isEqualTo("mika@example.com");
+    assertThat(actual).first().extracting(Student::getArea).isEqualTo("埼玉県");
+    assertThat(actual).first().extracting(Student::getAge).isEqualTo(27);
+    assertThat(actual).first().extracting(Student::getSex).isEqualTo("女");
+    assertThat(actual).first().extracting(Student::getRemark).isEqualTo("プログラミング経験あり");
+    assertThat(actual).first().extracting(Student::isDeleted).isEqualTo(false);
   }
 
   @Test
@@ -351,28 +350,28 @@ public class StudentRepositoryTest {
 
     List<StudentCourse> actual = sut.searchStudentCourseListByStudentId(studentId);
 
-    assertThat(actual.getFirst().getId()).isEqualTo("bbbbbbbb-0000-0000-0000-000000000004");
-    assertThat(actual.getFirst().getStudentId()).isEqualTo(studentId);
-    assertThat(actual.getFirst().getCourseMasterId()).isEqualTo("cccccccc-0000-0000-0000-000000000001");
-    assertThat(actual.getFirst().getCourseStartAt()).isEqualTo(LocalDateTime.parse("2024-07-01T09:00:00.000000"));
-    assertThat(actual.getFirst().getCourseEndAt()).isEqualTo(LocalDateTime.parse("2025-07-01T17:00:00.000000"));
+    assertThat(actual).first().extracting(StudentCourse::getId).isEqualTo("bbbbbbbb-0000-0000-0000-000000000004");
+    assertThat(actual).first().extracting(StudentCourse::getStudentId).isEqualTo(studentId);
+    assertThat(actual).first().extracting(StudentCourse::getCourseMasterId).isEqualTo("cccccccc-0000-0000-0000-000000000001");
+    assertThat(actual).first().extracting(StudentCourse::getCourseStartAt).isEqualTo(LocalDateTime.parse("2024-07-01T09:00:00.000000"));
+    assertThat(actual).first().extracting(StudentCourse::getCourseEndAt).isEqualTo(LocalDateTime.parse("2025-07-01T17:00:00.000000"));
   }
 
   @Test
   void 受講生IDで検索して受講生コースが複数該当するときに全て検索で取得できること() {
     String studentId = "aaaaaaaa-0000-0000-0000-000000000005";
-    
+
     List<StudentCourse> actual = sut.searchStudentCourseListByStudentId(studentId);
 
-    assertThat(actual.getFirst().getId()).isEqualTo("bbbbbbbb-0000-0000-0000-000000000005");
-    assertThat(actual.getFirst().getCourseMasterId()).isEqualTo("cccccccc-0000-0000-0000-000000000002");
-    assertThat(actual.getFirst().getCourseStartAt()).isEqualTo(LocalDateTime.parse("2024-08-01T09:00:00.000000"));
-    assertThat(actual.getFirst().getCourseEndAt()).isEqualTo(LocalDateTime.parse("2025-08-01T17:00:00.000000"));
+    assertThat(actual).first().extracting(StudentCourse::getId).isEqualTo("bbbbbbbb-0000-0000-0000-000000000005");
+    assertThat(actual).first().extracting(StudentCourse::getCourseMasterId).isEqualTo("cccccccc-0000-0000-0000-000000000002");
+    assertThat(actual).first().extracting(StudentCourse::getCourseStartAt).isEqualTo(LocalDateTime.parse("2024-08-01T09:00:00.000000"));
+    assertThat(actual).first().extracting(StudentCourse::getCourseEndAt).isEqualTo(LocalDateTime.parse("2025-08-01T17:00:00.000000"));
 
-    assertThat(actual.getLast().getId()).isEqualTo("bbbbbbbb-0000-0000-0000-000000000010");
-    assertThat(actual.getLast().getCourseMasterId()).isEqualTo("cccccccc-0000-0000-0000-000000000003");
-    assertThat(actual.getLast().getCourseStartAt()).isEqualTo(LocalDateTime.parse("2021-12-29T12:34:56.000000"));
-    assertThat(actual.getLast().getCourseEndAt()).isEqualTo(LocalDateTime.parse("2022-10-31T13:52:46.000000"));
+    assertThat(actual).last().extracting(StudentCourse::getId).isEqualTo("bbbbbbbb-0000-0000-0000-000000000010");
+    assertThat(actual).last().extracting(StudentCourse::getCourseMasterId).isEqualTo("cccccccc-0000-0000-0000-000000000003");
+    assertThat(actual).last().extracting(StudentCourse::getCourseStartAt).isEqualTo(LocalDateTime.parse("2021-12-29T12:34:56.000000"));
+    assertThat(actual).last().extracting(StudentCourse::getCourseEndAt).isEqualTo(LocalDateTime.parse("2022-10-31T13:52:46.000000"));
   }
 
   @Test
