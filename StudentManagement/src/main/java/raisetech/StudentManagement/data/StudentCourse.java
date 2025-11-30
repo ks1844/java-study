@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor.AnyAnnotation;
 import lombok.Setter;
 
 @Getter
@@ -15,13 +14,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class StudentCourse {
 
-  @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "数字のみ入力するようにしてください。")
+  @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "UUIDを入力するようにしてください。")
   private String id;
 
-  @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "数字のみ入力するようにしてください。")
+  @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "UUIDを入力するようにしてください。")
   private String studentId;
 
-  @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "数字のみ入力するようにしてください。")
+  @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "UUIDを入力するようにしてください。")
   private String courseMasterId;
 
   private LocalDateTime courseStartAt;

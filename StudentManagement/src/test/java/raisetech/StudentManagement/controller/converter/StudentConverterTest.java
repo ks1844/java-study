@@ -153,7 +153,7 @@ class StudentConverterTest {
     // 実行
     List<StudentCourseDetail> actual = sut.convertStudentCourseDetailList(studentCourseList,courseApplicationStatusList,courseMasterList);
 
-// 検証
+    // 検証
     assertThat(actual).hasSize(1);
     assertThat(actual).first().extracting(StudentCourseDetail::getStudentCourse).isEqualTo(studentCourse1);
     assertThat(actual).first().extracting(StudentCourseDetail::getCourseApplicationStatus).isEqualTo(courseApplicationStatus);

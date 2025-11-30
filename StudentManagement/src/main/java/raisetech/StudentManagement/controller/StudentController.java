@@ -78,20 +78,6 @@ public class StudentController {
   }
 
   /**
-   * 受講生の登録画面へ遷移
-   */
-  @GetMapping("/newStudentDetail")
-  public String newStudent(Model model) {
-    // 入力を受けるstudentDetailオブジェクトを作成
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudentCourseDetailList(Arrays.asList(new StudentCourseDetail()));
-
-    // studentDetailオブジェクトをmodelに渡す
-    model.addAttribute("studentDetailDetail", studentDetail);
-    return "registerStudentDetail";
-  }
-
-  /**
    * 受講生詳細の登録
    *
    * @param studentDetail 受講生詳細

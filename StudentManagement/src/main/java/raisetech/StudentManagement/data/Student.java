@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Student {
 
-  @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "数字のみ入力するようにしてください。")
+  @Pattern(regexp = "^([0-9a-f]{8})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})$",message = "UUIDを入力するようにしてください。")
   private String id;
 
   @NotBlank

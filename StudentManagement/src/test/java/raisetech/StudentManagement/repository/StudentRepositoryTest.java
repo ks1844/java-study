@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import raisetech.StudentManagement.data.CourseApplicationStatus;
 import raisetech.StudentManagement.data.CourseMaster;
 import raisetech.StudentManagement.data.Student;
