@@ -97,14 +97,14 @@ class StudentServiceTest {
         testData.studentCourseId());
     Mockito.verify(repository, Mockito.times(1)).searchCourseMasterById(testData.courseMasterId());
 
-// 内容の確認
-    assertThat(actual.getStudent().getId()).isEqualTo(expected.studentId);
+    // 内容の確認
+    assertThat(actual.getStudent().getId()).isEqualTo(expected.studentId());
     assertThat(actual.getStudentCourseDetailList()).first().extracting(detail -> detail.getStudentCourse().getId())
-        .isEqualTo(expected.studentCourseId);
+        .isEqualTo(expected.studentCourseId());
     assertThat(actual.getStudentCourseDetailList()).first().extracting(detail -> detail.getCourseApplicationStatus().getStudentCourseId())
-        .isEqualTo(expected.studentCourseId);
+        .isEqualTo(expected.studentCourseId());
     assertThat(actual.getStudentCourseDetailList()).first().extracting(detail -> detail.getCourseMaster().getId())
-        .isEqualTo(expected.courseMasterId);
+        .isEqualTo(expected.courseMasterId());
     }
 
   @Test
@@ -130,10 +130,10 @@ class StudentServiceTest {
     sut.registerStudentDetail(testData.studentDetail);
 
     // 呼び出された回数の検証
-    Mockito.verify(repository, Mockito.times(1)).registerStudent(testData.student);
+    Mockito.verify(repository, Mockito.times(1)).registerStudent(testData.student());
     Mockito.verify(repository, Mockito.times(1)).registerStudentCourse(testData.studentDetail().getStudentCourseDetailList().get(0).getStudentCourse());
-    Mockito.verify(repository, Mockito.times(1)).registerCourseApplicationStatus(testData.studentDetail.getStudentCourseDetailList().get(0).getCourseApplicationStatus());
-    Mockito.verify(repository,Mockito.times(1)).searchCourseMasterById(testData.courseMasterId);
+    Mockito.verify(repository, Mockito.times(1)).registerCourseApplicationStatus(testData.studentDetail().getStudentCourseDetailList().get(0).getCourseApplicationStatus());
+    Mockito.verify(repository,Mockito.times(1)).searchCourseMasterById(testData.courseMasterId());
   }
 
   @Test
@@ -142,7 +142,7 @@ class StudentServiceTest {
     StudentDetail expected = testData.studentDetail();
 
     // テスト対象の実行
-    sut.registerStudentDetail(testData.studentDetail);
+    sut.registerStudentDetail(testData.studentDetail());
 
     // 検証
     Assertions.assertEquals(LocalDateTime.now().getHour()
@@ -157,11 +157,11 @@ class StudentServiceTest {
     StudentDetail expected = testData.studentDetail();
 
     // テスト対象の実行
-    sut.registerStudentDetail(testData.studentDetail);
+    sut.registerStudentDetail(testData.studentDetail());
 
     // 呼び出された回数の検証
-    Mockito.verify(repository,Mockito.times(1)).registerStudent(testData.student);
-    Mockito.verify(repository,Mockito.times(1)).registerStudentCourse(testData.studentCourse);
+    Mockito.verify(repository,Mockito.times(1)).registerStudent(testData.student());
+    Mockito.verify(repository,Mockito.times(1)).registerStudentCourse(testData.studentCourse());
 
     // 検証
     assertThat(expected.getStudentCourseDetailList()).first()
@@ -174,12 +174,12 @@ class StudentServiceTest {
     TestData testData = getTestData();
 
     // テスト対象の実行
-    sut.updateStudentDetail(testData.studentDetail);
+    sut.updateStudentDetail(testData.studentDetail());
 
     // 呼び出された回数の検証
-    Mockito.verify(repository, Mockito.times(1)).updateStudent(testData.student);
-    Mockito.verify(repository, Mockito.times(1)).updateStudentCourse(testData.studentCourse);
-    Mockito.verify(repository, Mockito.times(1)).updateCourseApplicationStatus(testData.courseApplicationStatus);
+    Mockito.verify(repository, Mockito.times(1)).updateStudent(testData.student());
+    Mockito.verify(repository, Mockito.times(1)).updateStudentCourse(testData.studentCourse());
+    Mockito.verify(repository, Mockito.times(1)).updateCourseApplicationStatus(testData.courseApplicationStatus());
   }
 
   private static TestData getTestData() {

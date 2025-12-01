@@ -10,7 +10,6 @@ import jakarta.validation.Validator;
 import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
-
 import org.junit.jupiter.api.MethodOrderer.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -18,7 +17,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -169,7 +167,7 @@ class StudentControllerTest {
     // 入力チェックに異常があったときのメッセージを検証
     // extractiongがリストを持っている
     assertThat(violations).extracting("message")
-        .containsOnly("数字のみ入力するようにしてください。");
+        .containsOnly("UUIDを入力するようにしてください。");
 
   }
 

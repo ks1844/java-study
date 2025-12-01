@@ -1,6 +1,5 @@
 package raisetech.StudentManagement.data;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
