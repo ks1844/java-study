@@ -228,7 +228,7 @@ class StudentConverterTest {
     Student student = new Student();
     student.setId("aaaaaaaa-0000-0000-0000-000000000006");
     student.setName("test name");
-    student.setKanaName("test kananame");
+    student.setKanaName("test kana name");
     student.setNickname("test nickname");
     student.setEmail("test9999@test.com");
     student.setArea("Test");

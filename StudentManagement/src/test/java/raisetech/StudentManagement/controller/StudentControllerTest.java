@@ -92,7 +92,7 @@ class StudentControllerTest {
                              "studentCourseDetailList":[
                                  {
                                      "studentCourse":{
-                                         "courseMasterId":"cccccccc-0000-0000-0000-000000000001"
+                                         "courseMasterId":"11111111-0000-0000-0000-000000000001"
                                      }
                                  }
                              ]
@@ -121,7 +121,7 @@ class StudentControllerTest {
                   "studentCourseDetailList":[
                       {
                           "studentCourse":{
-                              "courseMasterId":"cccccccc-0000-0000-0000-000000000001"
+                              "courseMasterId":"11111111-0000-0000-0000-000000000001"
                           }
                       }
                   ]
@@ -165,7 +165,7 @@ class StudentControllerTest {
     assertThat(violations.size()).isEqualTo(1);
 
     // 入力チェックに異常があったときのメッセージを検証
-    // extractiongがリストを持っている
+    // extractingがリストを持っている
     assertThat(violations).extracting("message")
         .containsOnly("UUIDを入力するようにしてください。");
 

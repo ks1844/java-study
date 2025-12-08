@@ -78,7 +78,7 @@ public class StudentService {
   }
 
   /**
-   * 受講生詳細の複数条件検索
+   * 受講生の複数条件検索
    *
    * @return 受講生詳細のリスト
    */

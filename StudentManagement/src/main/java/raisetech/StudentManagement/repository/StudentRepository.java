@@ -132,16 +132,4 @@ public interface StudentRepository {
    */
   CourseMaster searchCourseMasterById(String id);
 
-
-  // TODO: MySQLのUUID()で自動生成されたidを取得してstudentのidフィールドにならないため保留
-  //@Insert("INSERT INTO students (id, name, kana_name, nickname, email, area, age, sex, remark, is_deleted) " +
-  //    "VALUES (UUID(), #{name}, #{kanaName}, #{nickname}, #{email}, #{area}, #{age}, #{sex}, #{remark}, FALSE)")
-  //@Options(useGeneratedKeys = true, keyProperty = "student.id", keyColumn = "id")
-  //void registerStudent(Student student);
-
-  // TODO: 上記のOptionsアノテーションが想定通り機能しないため、UUIDはJavaで生成するため現在不要
-  //@Insert("INSERT INTO students_courses (id, student_id, course_name, course_start_at, course_end_at) "
-  //    + "VALUES (UUID(), #{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt} )")
-  //@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-  //void registerStudentsCourses(StudentsCourses studentsCourses);
 }

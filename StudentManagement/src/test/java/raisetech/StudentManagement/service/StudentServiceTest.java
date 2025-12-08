@@ -25,7 +25,7 @@ import raisetech.StudentManagement.repository.StudentRepository;
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
 
-  // Mockitが用意しているモック
+  // Mockitoが用意しているモック
   @Mock
   private StudentRepository repository;
 

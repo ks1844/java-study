@@ -34,10 +34,10 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生IDから受講生の検索ができること(){
-    String id = "aaaaaaaa-0000-0000-0000-000000000007";
+    String id = "a1a1a1a1-0000-0000-0000-000000000007";
     Student actual = sut.searchStudentById(id);
 
-    assertThat(actual.getId()).isEqualTo("aaaaaaaa-0000-0000-0000-000000000007");
+    assertThat(actual.getId()).isEqualTo("a1a1a1a1-0000-0000-0000-000000000007");
     assertThat(actual.getName()).isEqualTo("小林 美香");
     assertThat(actual.getKanaName()).isEqualTo("コバヤシ ミカ");
     assertThat(actual.getNickname()).isEqualTo("ミカ");
@@ -157,7 +157,7 @@ public class StudentRepositoryTest {
     List<Student> actual = sut.searchStudentByCondition(studentSearchCriteria);
 
     assertThat(actual).hasSize(1);
-    assertThat(actual).first().extracting(Student::getId).isEqualTo("aaaaaaaa-0000-0000-0000-000000000007");
+    assertThat(actual).first().extracting(Student::getId).isEqualTo("a1a1a1a1-0000-0000-0000-000000000007");
     assertThat(actual).first().extracting(Student::getName).isEqualTo("小林 美香");
     assertThat(actual).first().extracting(Student::getKanaName).isEqualTo("コバヤシ ミカ");
     assertThat(actual).first().extracting(Student::getNickname).isEqualTo("ミカ");
@@ -192,7 +192,7 @@ public class StudentRepositoryTest {
   @Test
   void 受講生の登録ができること() {
     String id = "8888eeee-88ee-88ee-88ee-888888eeeeee";
-    Student student = new Student(id, "test name", "test kananame", "test nickname",
+    Student student = new Student(id, "test name", "test kanaName", "test nickname",
         "test9999@test.com", "Test", 99, "その他", "備考テスト", false);
 
     sut.registerStudent(student);
@@ -203,7 +203,7 @@ public class StudentRepositoryTest {
     assertThat(actualStudentList.size()).isEqualTo(9);
     assertThat(actualStudent.getId()).isEqualTo(id);
     assertThat(actualStudent.getName()).isEqualTo("test name");
-    assertThat(actualStudent.getKanaName()).isEqualTo("test kananame");
+    assertThat(actualStudent.getKanaName()).isEqualTo("test kanaName");
     assertThat(actualStudent.getNickname()).isEqualTo("test nickname");
     assertThat(actualStudent.getEmail()).isEqualTo("test9999@test.com");
     assertThat(actualStudent.getArea()).isEqualTo("Test");
@@ -215,7 +215,7 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生の名前の更新ができること() {
-    String id = "aaaaaaaa-0000-0000-0000-000000000001";
+    String id = "a1a1a1a1-0000-0000-0000-000000000001";
     Student student = sut.searchStudentById(id);
     student.setName("更新テスト 名前");
 
@@ -227,7 +227,7 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生のカナ名の更新ができること() {
-    String id = "aaaaaaaa-0000-0000-0000-000000000001";
+    String id = "a1a1a1a1-0000-0000-0000-000000000001";
     Student student = sut.searchStudentById(id);
     student.setKanaName("こうしん かな");
 
@@ -239,7 +239,7 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生のニックネームの更新ができること() {
-    String id = "aaaaaaaa-0000-0000-0000-000000000001";
+    String id = "a1a1a1a1-0000-0000-0000-000000000001";
     Student student = sut.searchStudentById(id);
     student.setNickname("こうしんくん");
 
@@ -251,7 +251,7 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生のメールアドレスの更新ができること() {
-    String id = "aaaaaaaa-0000-0000-0000-000000000001";
+    String id = "a1a1a1a1-0000-0000-0000-000000000001";
     Student student = sut.searchStudentById(id);
     student.setEmail("update_test@example.com");
 
@@ -263,7 +263,7 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生の地域の更新ができること() {
-    String id = "aaaaaaaa-0000-0000-0000-000000000001";
+    String id = "a1a1a1a1-0000-0000-0000-000000000001";
     Student student = sut.searchStudentById(id);
     student.setArea("更新県");
 
@@ -275,7 +275,7 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生の年齢の更新ができること() {
-    String id = "aaaaaaaa-0000-0000-0000-000000000001";
+    String id = "a1a1a1a1-0000-0000-0000-000000000001";
     Student student = sut.searchStudentById(id);
     student.setAge(30);
 
@@ -287,7 +287,7 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生の性別の更新ができること() {
-    String id = "aaaaaaaa-0000-0000-0000-000000000001";
+    String id = "a1a1a1a1-0000-0000-0000-000000000001";
     Student student = sut.searchStudentById(id);
     student.setSex("その他");
 
@@ -299,7 +299,7 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生の備考の更新ができること() {
-    String id = "aaaaaaaa-0000-0000-0000-000000000001";
+    String id = "a1a1a1a1-0000-0000-0000-000000000001";
     Student student = sut.searchStudentById(id);
     student.setRemark("備考を更新しました");
 
@@ -311,7 +311,7 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生の削除フラグの更新ができること() {
-    String id = "aaaaaaaa-0000-0000-0000-000000000001";
+    String id = "a1a1a1a1-0000-0000-0000-000000000001";
     Student student = sut.searchStudentById(id);
     student.setDeleted(true);
 
@@ -333,65 +333,65 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生コースIDから受講生コースの検索ができること() {
-    String studentCourseId = "bbbbbbbb-0000-0000-0000-000000000004";
+    String studentCourseId = "b2b2b2b2-0000-0000-0000-000000000004";
     StudentCourse actual = sut.searchStudentCourse(studentCourseId);
 
     assertThat(actual.getId()).isEqualTo(studentCourseId);
-    assertThat(actual.getStudentId()).isEqualTo("aaaaaaaa-0000-0000-0000-000000000004");
-    assertThat(actual.getCourseMasterId()).isEqualTo("cccccccc-0000-0000-0000-000000000001");
+    assertThat(actual.getStudentId()).isEqualTo("a1a1a1a1-0000-0000-0000-000000000004");
+    assertThat(actual.getCourseMasterId()).isEqualTo("c3c3c3c3-0000-0000-0000-000000000001");
     assertThat(actual.getCourseStartAt()).isEqualTo(LocalDateTime.parse("2024-07-01T09:00:00.000000"));
     assertThat(actual.getCourseEndAt()).isEqualTo(LocalDateTime.parse("2025-07-01T17:00:00.000000"));
   }
 
   @Test
   void 受講生IDから受講生コースの検索ができること() {
-    String studentId = "aaaaaaaa-0000-0000-0000-000000000004";
+    String studentId = "a1a1a1a1-0000-0000-0000-000000000004";
 
     List<StudentCourse> actual = sut.searchStudentCourseListByStudentId(studentId);
 
-    assertThat(actual).first().extracting(StudentCourse::getId).isEqualTo("bbbbbbbb-0000-0000-0000-000000000004");
+    assertThat(actual).first().extracting(StudentCourse::getId).isEqualTo("b2b2b2b2-0000-0000-0000-000000000004");
     assertThat(actual).first().extracting(StudentCourse::getStudentId).isEqualTo(studentId);
-    assertThat(actual).first().extracting(StudentCourse::getCourseMasterId).isEqualTo("cccccccc-0000-0000-0000-000000000001");
+    assertThat(actual).first().extracting(StudentCourse::getCourseMasterId).isEqualTo("c3c3c3c3-0000-0000-0000-000000000001");
     assertThat(actual).first().extracting(StudentCourse::getCourseStartAt).isEqualTo(LocalDateTime.parse("2024-07-01T09:00:00.000000"));
     assertThat(actual).first().extracting(StudentCourse::getCourseEndAt).isEqualTo(LocalDateTime.parse("2025-07-01T17:00:00.000000"));
   }
 
   @Test
   void 受講生IDで検索して受講生コースが複数該当するときに全て検索で取得できること() {
-    String studentId = "aaaaaaaa-0000-0000-0000-000000000005";
+    String studentId = "a1a1a1a1-0000-0000-0000-000000000005";
 
     List<StudentCourse> actual = sut.searchStudentCourseListByStudentId(studentId);
 
-    assertThat(actual).first().extracting(StudentCourse::getId).isEqualTo("bbbbbbbb-0000-0000-0000-000000000005");
-    assertThat(actual).first().extracting(StudentCourse::getCourseMasterId).isEqualTo("cccccccc-0000-0000-0000-000000000002");
+    assertThat(actual).first().extracting(StudentCourse::getId).isEqualTo("b2b2b2b2-0000-0000-0000-000000000005");
+    assertThat(actual).first().extracting(StudentCourse::getCourseMasterId).isEqualTo("c3c3c3c3-0000-0000-0000-000000000002");
     assertThat(actual).first().extracting(StudentCourse::getCourseStartAt).isEqualTo(LocalDateTime.parse("2024-08-01T09:00:00.000000"));
     assertThat(actual).first().extracting(StudentCourse::getCourseEndAt).isEqualTo(LocalDateTime.parse("2025-08-01T17:00:00.000000"));
 
-    assertThat(actual).last().extracting(StudentCourse::getId).isEqualTo("bbbbbbbb-0000-0000-0000-000000000010");
-    assertThat(actual).last().extracting(StudentCourse::getCourseMasterId).isEqualTo("cccccccc-0000-0000-0000-000000000003");
+    assertThat(actual).last().extracting(StudentCourse::getId).isEqualTo("b2b2b2b2-0000-0000-0000-000000000010");
+    assertThat(actual).last().extracting(StudentCourse::getCourseMasterId).isEqualTo("c3c3c3c3-0000-0000-0000-000000000003");
     assertThat(actual).last().extracting(StudentCourse::getCourseStartAt).isEqualTo(LocalDateTime.parse("2021-12-29T12:34:56.000000"));
     assertThat(actual).last().extracting(StudentCourse::getCourseEndAt).isEqualTo(LocalDateTime.parse("2022-10-31T13:52:46.000000"));
   }
 
   @Test
   void 受講生コースの登録ができること() {
-    String studentCourseId = "ssssssss-0000-0000-0000-000000000020";
+    String studentCourseId = "a1a1a1a1-0000-0000-0000-000000000020";
     StudentCourse studentCourse = new StudentCourse();
     studentCourse.setId(studentCourseId);
-    studentCourse.setStudentId("aaaaaaaa-0000-0000-0000-000000000020");
-    studentCourse.setCourseMasterId("cccccccc-0000-0000-0000-000000000002");
+    studentCourse.setStudentId("a1a1a1a1-0000-0000-0000-000000000020");
+    studentCourse.setCourseMasterId("c3c3c3c3-0000-0000-0000-000000000002");
     studentCourse.setCourseStartAt(LocalDateTime.parse("2026-12-19T23:49:38.000000"));
     studentCourse.setCourseEndAt(LocalDateTime.parse("2027-09-27T16:27:19.000000"));
 
     sut.registerStudentCourse(studentCourse);
 
     List<StudentCourse> actualStudentCourseList = sut.searchStudentCourseList();
-    StudentCourse actualStudentCourse = sut.searchStudentCourse("ssssssss-0000-0000-0000-000000000020");
+    StudentCourse actualStudentCourse = sut.searchStudentCourse("a1a1a1a1-0000-0000-0000-000000000020");
 
     assertThat(actualStudentCourseList.size()).isEqualTo(11);
-    assertThat(actualStudentCourse.getId()).isEqualTo("ssssssss-0000-0000-0000-000000000020");
-    assertThat(actualStudentCourse.getStudentId()).isEqualTo("aaaaaaaa-0000-0000-0000-000000000020");
-    assertThat(actualStudentCourse.getCourseMasterId()).isEqualTo("cccccccc-0000-0000-0000-000000000002");
+    assertThat(actualStudentCourse.getId()).isEqualTo("a1a1a1a1-0000-0000-0000-000000000020");
+    assertThat(actualStudentCourse.getStudentId()).isEqualTo("a1a1a1a1-0000-0000-0000-000000000020");
+    assertThat(actualStudentCourse.getCourseMasterId()).isEqualTo("c3c3c3c3-0000-0000-0000-000000000002");
     assertThat(actualStudentCourse.getCourseStartAt()).isEqualTo(
         LocalDateTime.parse("2026-12-19T23:49:38.000000"));
     assertThat(actualStudentCourse.getCourseEndAt()).isEqualTo(
@@ -400,9 +400,9 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生コースのコースマスタIDの更新ができること() {
-    String studentCourseId = "bbbbbbbb-0000-0000-0000-000000000008";
+    String studentCourseId = "b2b2b2b2-0000-0000-0000-000000000008";
     StudentCourse studentCourse = sut.searchStudentCourse(studentCourseId);
-    studentCourse.setCourseMasterId("cccccccc-0000-0000-0000-000000000001");
+    studentCourse.setCourseMasterId("c3c3c3c3-0000-0000-0000-000000000001");
 
     sut.updateStudentCourse(studentCourse);
 
@@ -412,7 +412,7 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生コースの開始日の更新ができること() {
-    String studentCourseId = "bbbbbbbb-0000-0000-0000-000000000008";
+    String studentCourseId = "b2b2b2b2-0000-0000-0000-000000000008";
     StudentCourse studentCourse = sut.searchStudentCourse(studentCourseId);
     studentCourse.setCourseStartAt(LocalDateTime.of(2024, 11, 1, 9, 0));
 
@@ -424,7 +424,7 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生コースの終了日の更新ができること() {
-    String studentCourseId = "bbbbbbbb-0000-0000-0000-000000000008";
+    String studentCourseId = "b2b2b2b2-0000-0000-0000-000000000008";
     StudentCourse studentCourse = sut.searchStudentCourse(studentCourseId);
     studentCourse.setCourseEndAt(LocalDateTime.of(2025, 11, 1, 17,0));
 
@@ -446,15 +446,15 @@ public class StudentRepositoryTest {
 
   @Test
   void 受講生コースIDから申込状況の検索ができること() {
-    String studentCourseId = "bbbbbbbb-0000-0000-0000-000000000008";
+    String studentCourseId = "b2b2b2b2-0000-0000-0000-000000000008";
     CourseApplicationStatus actual = sut.searchCourseApplicationStatusByStudentCourseId(studentCourseId);
     assertThat(actual.getStudentCourseId()).isEqualTo(studentCourseId);
   }
 
   @Test
   void 申込状況の登録ができること() {
-    String courseApplicationStatusId = "dddddddd-0000-0000-0000-000000000020";
-    String studentCourseId = "bbbbbbbb-0000-0000-0000-000000000020";
+    String courseApplicationStatusId = "d4d4d4d4-0000-0000-0000-000000000020";
+    String studentCourseId = "b2b2b2b2-0000-0000-0000-000000000020";
 
     CourseApplicationStatus courseApplicationStatus = new CourseApplicationStatus();
     courseApplicationStatus.setId(courseApplicationStatusId);
@@ -470,8 +470,8 @@ public class StudentRepositoryTest {
 
   @Test
   void 申込状況のステータス更新ができること() {
-    String courseApplicationId = "dddddddd-0000-0000-0000-000000000002";
-    String studentCourseId = "bbbbbbbb-0000-0000-0000-000000000002";
+    String courseApplicationId = "d4d4d4d4-0000-0000-0000-000000000002";
+    String studentCourseId = "b2b2b2b2-0000-0000-0000-000000000002";
 
     CourseApplicationStatus courseApplicationStatus = sut.searchCourseApplicationStatusByStudentCourseId(studentCourseId);
     courseApplicationStatus.setStatus("本申込");
@@ -490,7 +490,7 @@ public class StudentRepositoryTest {
 
   @Test
   void コースマスタIDからコースマスタの検索ができること() {
-    String id = "cccccccc-0000-0000-0000-000000000001";
+    String id = "c3c3c3c3-0000-0000-0000-000000000001";
     CourseMaster actual = sut.searchCourseMasterById(id);
     assertThat(actual.getId()).isEqualTo(id);
     assertThat(actual.getName()).isEqualTo("Javaコース");
@@ -498,7 +498,7 @@ public class StudentRepositoryTest {
 
   @Test
   void コースマスタIDがないときに検索するとnullが返ること() {
-String id = "xxxxxxxx-0000-0000-0000-000000000001";
+    String id = "e9e9e9e9-0000-0000-0000-000000000001";
     CourseMaster actual = sut.searchCourseMasterById(id);
     assertThat(actual).isNull();
   }
