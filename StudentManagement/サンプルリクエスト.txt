@@ -82,7 +82,7 @@
 }
 
 #　受講生の複数条件検索
-・URL: /searchStudentDetailByCondition?email=example&area=東京
+・URL: /searchStudentByCondition?email=example&area=東京
 ・METHOD: GET
 ・レスポンス: JSON形式
 ・レスポンス例：

@@ -67,7 +67,7 @@ class StudentControllerTest {
   @Test
   void 受講生の複数条件検索ができること() throws Exception {
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/searchStudentDetailByCondition")
+    mockMvc.perform(MockMvcRequestBuilders.get("/searchStudentByCondition")
             .param("name", "テスト太郎"))
         .andExpect(status().isOk());
   }
