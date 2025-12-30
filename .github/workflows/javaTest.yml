@@ -6,8 +6,14 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  EC2_USER: 'ec2-user'
+  EC2_HOST: '54.150.205.185'
+  SRC_PATH: 'StudentManagement/build/libs/*.jar'
+  DEST_PATH: '/home/ec2-user/StudentManagement.jar'
+
 jobs:
-  build:
+  deploy:
 
     runs-on: ubuntu-latest
     permissions:
@@ -22,10 +28,56 @@ jobs:
         distribution: 'temurin'
         
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
 
-    - name: Build with Gradle Wrapper
+    - name: Test with Gradle Wrapper
       run: ./gradlew build
       working-directory: StudentManagement
 
+    - name: Build with Gradle Wrapper
+      run: ./gradlew bootJar
+      working-directory: StudentManagement
 
+    - name: SCP Copy Application to EC2
+      env:
+        PRIVATE_KEY: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+      run: |
+        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+        scp -o StrictHostKeyChecking=no -i private_key $SRC_PATH $EC2_USER@$EC2_HOST:$DEST_PATH
+
+    - name: SSH Application Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.EC2_HOST }}
+        username: ${{ env.EC2_USER }}
+        key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+        envs: DEST_PATH
+        script: |
+          sudo yum update -y
+          if [ -f /etc/systemd/system/StudentManagement.service ]; then
+          echo "already exists Service File"
+          else
+          cat <<EOL | sudo tee -a /etc/systemd/system/StudentManagement.service
+          [Unit]
+          Description = StudentManagement app
+        
+          [Service]
+          ExecStart = java -jar ${DEST_PATH}
+          EnvironmentFile = /etc/sysconfig/StudentManagement
+          Restart = no
+          Type = simple
+          User = ec2-user
+          Group = ec2-user
+          SuccessExitStatus = 143
+        
+          [Install]
+          WantedBy = multi-user.target
+          EOL
+          fi
+          
+          sudo systemctl daemon-reload
+          if sudo systemctl status StudentManagement 2>&1 | grep "Active: active (running)" ; then
+            sudo systemctl restart StudentManagement
+          else
+          sudo systemctl start StudentManagement
+          fi

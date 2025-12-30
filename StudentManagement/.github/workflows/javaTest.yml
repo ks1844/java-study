@@ -35,17 +35,17 @@ jobs:
 
     - name: SCP Copy Application to EC2
       env:
-        PRIVATE_KEY:${{ secrets.AWS_EC2_PRIVATE_KEY }}
+        PRIVATE_KEY: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
         scp -o StrictHostKeyChecking=no -i private_key $SRC_PATH $EC2_USER@$EC2_HOST:$DEST_PATH
 
     - name: SSH Application Deploy
-      uses: appleboy/ssh-acrion@master
+      uses: appleboy/ssh-acrton@master
       with:
         host: ${{ env.EC2_HOST }}
         username: ${{ env.EC2_USER }}
-        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
         envs : DEST_PATH
         script: |
           sudo yum update -y
