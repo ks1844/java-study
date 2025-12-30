@@ -8,9 +8,9 @@ on:
 
 env:
   EC2_USER: 'ec2-user'
-  EC2_HOST: '54.150.205.185'
+  EC2_HOST: '13.112.26.12'
   SRC_PATH: 'StudentManagement/build/libs/*.jar'
-  DEST_PATH: '/home/ec2-user/StudentManagement.jar'
+  DEST_PATH: '/home/ec2-user/java-study/StudentManagement.jar'
 
 jobs:
   deploy:
