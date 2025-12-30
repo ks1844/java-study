@@ -1,0 +1,61 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  EC2_USER: 'ec2-user'
+  EC2_HOST: '54.238.131.98'
+  SRC_PATH: 'StudentManagement/build/libs/*.jar'
+  DEST_PATH: '/home/ec2-user/java-study/StudentManagement.jar'
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
+
+    - name: Test with Gradle Wrapper
+      run: ./gradlew build
+      working-directory: StudentManagement
+
+    - name: Build with Gradle Wrapper
+      run: ./gradlew bootJar
+      working-directory: StudentManagement
+
+    - name: SCP Copy Application to EC2
+      env:
+        PRIVATE_KEY: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+      run: |
+        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+        scp -o StrictHostKeyChecking=no -i private_key $SRC_PATH $EC2_USER@$EC2_HOST:$DEST_PATH
+
+    - name: SSH Application Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.EC2_HOST }}
+        username: ${{ env.EC2_USER }}
+        key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+        envs: DEST_PATH
+        script: |
+          sudo yum update -y
+          if sudo systemctl status StudentManagement 2>&1 | grep "Active: active (running)" ; then
+            sudo systemctl restart StudentManagement
+          else
+          sudo systemctl start StudentManagement
+          fi
